@@ -1,0 +1,95 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>2D Web Based CAD</title>
+        <meta name="description" content="2D Web Based CAD (Computer-Aided Design).">
+
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+            integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
+            crossorigin="anonymous" defer>
+        </script>
+    </head>
+
+    <body>
+        <h1>2D Web Based CAD</h1>
+        <p>13519063, 13519082, 13519101</p>
+
+
+        <div class="row">
+            <div class="column">
+                <canvas id="gl-canvas" width="640" height="480"></canvas>
+                <p><b>You are drawing </b><span id="whichShape">nothing. </span></p>
+                <!-- <script  id="vertex-shader-2d" type="notjs">
+
+                    // an attribute will receive data from a buffer
+                    attribute vec4 a_position;
+                  
+                    // all shaders have a main function
+                    void main() {
+                  
+                      // gl_Position is a special variable a vertex shader
+                      // is responsible for setting
+                      gl_Position = a_position;
+                    }
+                  
+                  </script>
+                
+                <script  id="fragment-shader-2d" type="notjs">
+
+                    // fragment shaders don't have a default precision so we need
+                    // to pick one. mediump is a good default
+                    precision mediump float;
+                    
+                    void main() {
+                        // gl_FragColor is a special variable a fragment shader
+                        // is responsible for setting
+                        gl_FragColor = vec4(1, 0, 0.5, 1); // return redish-purple
+                    }
+                
+                </script> -->
+            </div>
+            <div class="column">
+                <div style="padding:10px; background-color:#bbb;">
+                    <button id="LineButton">Line</button>
+                    <button id="SquareButton">Square</button>
+                    <button id="RectangleButton">Rectangle</button>
+                    <button id="PolygonButton">Polygon</button>
+                    <button id="ClearButton">Clear canvas</button>
+                </div> <br>
+                <div style="padding:10px;">
+                    <button id="LoadButton">Load file</button>
+                    <button id="SAveButton">Save current file</button>
+                </div> <br>
+                <div style="padding:10px;">
+                    tempat ngatur warna coming poligon soOOOon
+                </div> <br>
+                <div style="padding:10px;">
+                    <button id="HelpButton">Show help</button>
+                </div>    
+            </div>
+        </div>
+
+        <script src="js/script.js"></script>
+        
+    </body>
+</html>
+
+<!--
+
+-   Definisi model disimpan dalam sebuat file yang dengan mudah diedit. (Daftar koordinat & warna setiap polygon).
+-   Dapat membuka sebuah file model hasil penyimpanan.
+-	Menggeser titik kontrol/simpul dengan mouse.
+-	Mengubah panjang garis
+-	Mengubah ukuran sisi persegi
+-	Mengubah warna poligon (input bebas)
+-	Memiliki menu help yang memudahkan pengguna baru untuk dapat melakukan operasi di atas tanpa harus bertanya.
+
+
+
+
+-->
