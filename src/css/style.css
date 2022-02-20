@@ -9,5 +9,5 @@ canvas {
 .column {
     /* flex: 50%; */
     float: left;
-    padding: 10px;
+    /* padding: 10px; */
 }
