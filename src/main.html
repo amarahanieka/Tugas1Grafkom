@@ -3,26 +3,25 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
         <title>2D Web Based CAD</title>
         <meta name="description" content="2D Web Based CAD (Computer-Aided Design).">
 
         <link rel="stylesheet" href="css/style.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
             integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
             crossorigin="anonymous" defer>
-        </script>
+        </script> -->
     </head>
 
     <body>
-        <h1>2D Web Based CAD</h1>
-        <p>13519063, 13519082, 13519101</p>
+        
 
 
         <div class="row">
             <div class="column">
-                <canvas id="gl-canvas" width="640" height="480"></canvas>
+                <canvas id="gl-canvas" width="800" height="500"></canvas>
                 <p><b>You are drawing </b><span id="whichShape">nothing. </span></p>
                 <!-- <script  id="vertex-shader-2d" type="notjs">
 
@@ -53,7 +52,11 @@
                 
                 </script> -->
             </div>
-            <div class="column">
+            <div class="column" style="padding:10px;">
+                <div>
+                    <h1>2D Web Based CAD</h1>
+                    <p>13519063, 13519082, 13519101</p>
+                </div>
                 <div style="padding:10px; background-color:#bbb;">
                     <button id="LineButton">Line</button>
                     <button id="SquareButton">Square</button>
@@ -63,7 +66,7 @@
                 </div> <br>
                 <div style="padding:10px;">
                     <button id="LoadButton">Load file</button>
-                    <button id="SAveButton">Save current file</button>
+                    <button id="SaveButton">Save current file</button>
                 </div> <br>
                 <div style="padding:10px;">
                     tempat ngatur warna coming poligon soOOOon
