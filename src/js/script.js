@@ -94,6 +94,27 @@ function main() {
     };
 
     document.getElementById("PolygonButton").onclick = function () {
+        var points = [];
+        count = 1;
+        canvas.onmousedown = function(e) {
+            count++;
+            var x = e.clientX;
+            var y = e.clientY;
+            x = (x - canvas.width / 2) / (canvas.width / 2);
+            y = (canvas.height / 2 - y) / (canvas.height / 2);
+
+            var pts = [x,y];
+            points.push(pts)
+
+            var i = indexGaris;
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);
+            gl.bufferSubData(gl.ARRAY_BUFFER, 8*i, new Float32Array(pts));
+            gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+            indexGaris++;
+        }
+        
+        renderPoligon();
+        
         document.getElementById("whichShape").innerHTML = "a polygon!";
     };
 }
@@ -117,6 +138,15 @@ function renderGaris(){
 
 
     window.requestAnimationFrame(renderGaris);           
+
+}
+
+function renderPoligon(){
+    gl.clear( gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.POINTS, 0, indexGaris);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, indexGaris);
+
+    window.requestAnimationFrame(renderPoligon);           
 
 }
 
