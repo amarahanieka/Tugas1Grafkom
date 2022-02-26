@@ -14,6 +14,44 @@ const fsSource = `
 
 var indexGaris = 0;
 
+class object{
+    constructor(type){
+        this.type = type;
+    }
+}
+
+class line extends object{
+   constructor(type, points,color){
+        super(type);
+        this.points = points;
+        this.color = color;
+   }
+}
+
+class square extends object{
+    constructor(type,points,color){
+         super(type);
+         this.points = points;
+         this.color = color;
+    }
+ }
+
+ class rectangle extends object{
+    constructor(type, points,color){
+         super(type);
+         this.points = points;
+         this.color = color;
+    }
+ }
+
+ class polygon extends object{
+    constructor(type, points,color){
+         super(type);
+         this.points = points;
+         this.color = color;
+    }
+ }
+
 function main() {
     var canvas = document.getElementById("gl-canvas");
     gl = canvas.getContext("webgl");
