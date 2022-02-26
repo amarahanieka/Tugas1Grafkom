@@ -20,6 +20,13 @@ class object{
     }
 }
 
+class points extends object{
+    constructor(points){
+         super(type);
+         this.points = points;
+    }
+ }
+
 class line extends object{
    constructor(type, points,color){
         super(type);
