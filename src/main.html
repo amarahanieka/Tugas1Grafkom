@@ -18,7 +18,32 @@
         <div class="row">
             <div class="column">
                 <canvas id="gl-canvas" width="800" height="500"></canvas>
-                <p><b>You are drawing </b><span id="whichShape">nothing. </span></p>
+                <h2><span id="whichShape"><img src='img/icon_help.png'>Instructions / Help</span></h2>
+                <div id="toolDetail" style="max-width: 800px;">
+                    <p>How to use:
+                        <ol>
+                            <li>Click one of the tools from the menu on the right side of the screen. Detailed instructions on how to use the tool will show up on the bottom of the screen.</li>
+                            <li>Use the tool by clicking inside the canvas area.</li>
+                            <li>The [Show help] button can be used to show this instructions on the screen again.</li>
+                        </ol>
+                    </p>
+                    <p>List of tools:
+                        <ul>
+                            <li><b>Control:</b> Use to pick a shape and edit its colors/position.</li>
+                            <li><b>Line:</b> Creates a straight line.</li>
+                            <li><b>Square:</b> Creates a square.</li>
+                            <li><b>Rectangle:</b> Creates a rectangle.</li>
+                            <li><b>Polygon:</b> Creates a polygon.</li>
+                            <li><b>Undo Draw:</b> Deletes last created shape.</li>
+                            <li><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li>
+                            <li><b>Load file:</b> Loads canvas from a saved file.</li>
+                            <li><b>Save current file:</b> Saves current canvas into a file.</li>
+                            <li><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li>
+                            <li><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li>
+                            <li><b>Show help:</b> Shows this help menu.</li>
+                        </ul>
+                    </p>
+                </div>
             </div>
             <div class="column" style="padding:10px;">
                 <div>
@@ -26,21 +51,29 @@
                     <p>13519063, 13519082, 13519101</p>
                 </div>
                 <div style="padding:10px; background-color:#bbb;">
-                    <button id="LineButton">Line</button>
-                    <button id="SquareButton">Square</button>
-                    <button id="RectangleButton">Rectangle</button>
-                    <button id="PolygonButton">Polygon</button>
-                    <button id="ClearButton">Clear canvas</button>
+                    <div>Drawing Menu</div>
+                    <button id="ControlButton"><img src='img/icon_control.png'><br>Control</button>
+                    <button id="LineButton"><img src='img/icon_line.png'><br>Line</button>
+                    <button id="SquareButton"><img src='img/icon_square.png'><br>Square</button>
+                    <button id="RectangleButton"><img src='img/icon_rect.png'><br>Rectangle</button>
+                    <button id="PolygonButton"><img src='img/icon_polygon.png'><br>Polygon</button>
+                    <button id="UndoButton"><img src='img/icon_undo.png'><br>Undo Draw</button>
+                    <button id="ClearButton"><img src='img/icon_clear.png'><br>Clear</button>
                 </div> <br>
-                <div style="padding:10px;">
-                    <button id="LoadButton">Load file</button>
-                    <button id="SaveButton">Save current file</button>
+                <div style="padding:10px; background-color:#bbb;">
+                    <div>File Menu</div>
+                    <button id="LoadButton"><img src='img/icon_load.png'><br>Load file</button>
+                    <button id="SaveButton"><img src='img/icon_save.png'><br>Save current file</button>
                 </div> <br>
-                <div style="padding:10px;">
-                    tempat ngatur warna coming poligon soOOOon
+                <div style="padding:10px; background-color:#bbb;">
+                    <div>Color Menu</div>
+                    <input type="color" />
+                    <button id="FillButton">Fill Color</button>
+                    <button id="StrokeButton">Stroke Color</button>
                 </div> <br>
-                <div style="padding:10px;">
-                    <button id="HelpButton">Show help</button>
+                <div style="padding:10px; background-color:#bbb;">
+                    <div>Misc.</div>
+                    <button id="HelpButton"><img src='img/icon_help.png'><br>Show help</button>
                 </div>    
             </div>
         </div>
@@ -48,7 +81,10 @@
         <script src="new/tes.js"></script>
         <script src="new/shapefunctions/LineFunctions.js"></script>
         <script src="new/shapes/Line.js"></script>
-        
+        <script src="new/shapefunctions/SquareFunctions.js"></script>
+        <script src="new/shapes/Square.js"></script>
+        <script src="new/shapefunctions/RectangleFunctions.js"></script>
+        <script src="new/shapes/Rectangle.js"></script>
     </body>
 </html>
 
