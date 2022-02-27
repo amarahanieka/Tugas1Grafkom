@@ -9,10 +9,6 @@
         <meta name="description" content="2D Web Based CAD (Computer-Aided Design).">
 
         <link rel="stylesheet" href="css/style.css">
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
-            integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
-            crossorigin="anonymous" defer>
-        </script> -->
     </head>
 
     <body>
@@ -23,34 +19,6 @@
             <div class="column">
                 <canvas id="gl-canvas" width="800" height="500"></canvas>
                 <p><b>You are drawing </b><span id="whichShape">nothing. </span></p>
-                <!-- <script  id="vertex-shader-2d" type="notjs">
-
-                    // an attribute will receive data from a buffer
-                    attribute vec4 a_position;
-                  
-                    // all shaders have a main function
-                    void main() {
-                  
-                      // gl_Position is a special variable a vertex shader
-                      // is responsible for setting
-                      gl_Position = a_position;
-                    }
-                  
-                  </script>
-                
-                <script  id="fragment-shader-2d" type="notjs">
-
-                    // fragment shaders don't have a default precision so we need
-                    // to pick one. mediump is a good default
-                    precision mediump float;
-                    
-                    void main() {
-                        // gl_FragColor is a special variable a fragment shader
-                        // is responsible for setting
-                        gl_FragColor = vec4(1, 0, 0.5, 1); // return redish-purple
-                    }
-                
-                </script> -->
             </div>
             <div class="column" style="padding:10px;">
                 <div>
@@ -77,7 +45,9 @@
             </div>
         </div>
 
-        <script src="js/script.js"></script>
+        <script src="new/tes.js"></script>
+        <script src="new/shapefunctions/LineFunctions.js"></script>
+        <script src="new/shapes/Line.js"></script>
         
     </body>
 </html>
