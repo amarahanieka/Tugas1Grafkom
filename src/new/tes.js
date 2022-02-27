@@ -47,7 +47,7 @@ function main() {
     // gl.enableVertexAttribArray(program.aVertexColor);
 
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
-    gl.enable(gl.DEPTH_TEST);
+    // gl.enable(gl.DEPTH_TEST);
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // var var varrrrr
@@ -61,21 +61,18 @@ function main() {
     
     lineFunctions.listen("lineCreated", (line) => {
         listObject.push(line);
-        console.log(line);
         console.log(listObject);
         console.log("lineCreated");
         render();
         // isDrawing = false;
     })
 
-    // lineFunctions.listen("lineAborted", () => {
-    //     // listObject.push(line);
-    //     render();
-    //     console.log("aborted");
-    // })
+    lineFunctions.listen("lineAborted", () => {
+        render();
+        console.log("aborted");
+    })
 
     lineFunctions.listen("endPointCreated", () => {
-        // listObject.push(line);
         render();
         console.log("endPointCreated");
     })
@@ -92,27 +89,20 @@ function main() {
         gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
         lineFunctions.deactivate();
         console.log("tesssssss hapos");
-        listObject = [];
-        semua = [];
+        isDrawing = true;
+        listObject.length = 0;
+        semua.length = 0;
     });
 
 
     function render() {
         // listObject.forEach((obj) => obj.render(gl, vBuffer, cBuffer));
-        
-        
-        
+        console.log('listObject')      
+        console.log(listObject)       
+        semua = [];
         listObject.slice().forEach(element => {
             semua.push(element.point1, element.point2)    
         });
-
-        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
-        var vertices = [
-            -0.5,0.5,0.0,
-            0.0,0.5,0.0,
-            -0.25,0.25,0.0,
-            0.5,0.5,0.0, 
-         ];
 
         var jumlahObject = semua.length;
         
@@ -120,7 +110,6 @@ function main() {
         console.log(jumlahObject)
         semua = semua.flat(2);
 
-        console.log(vertices);
         console.log('semua: ');
         console.log(semua);
 
