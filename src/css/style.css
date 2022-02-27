@@ -15,3 +15,7 @@ canvas {
 .selectedtool{
     border-color: red;
 }
+
+button{
+    margin-bottom: 5px;
+}
