@@ -54,6 +54,7 @@ function main() {
     var currTool = "";
     var isDrawing = false;
     let listObject = [];
+    let undoList = [];
     var semua = [];
 
     // shapessss
@@ -77,11 +78,104 @@ function main() {
         console.log("endPointCreated");
     })
 
+    //square
+    const squareFunctions = new SquareFunctions(canvas);
+    
+    squareFunctions.listen("squareCreated", (square) => {
+        listObject.push(square);
+        console.log(listObject);
+        console.log("squareCreated");
+        render();
+        // isDrawing = false;
+    })
+
+    squareFunctions.listen("squareAborted", () => {
+        render();
+        console.log("aborted");
+    })
+
+    squareFunctions.listen("endPointCreated", () => {
+        render();
+        console.log("endPointCreated");
+    })
+
+    //rect
+    const rectFunctions = new RectangleFunctions(canvas);
+    
+    rectFunctions.listen("rectCreated", (rect) => {
+        listObject.push(rect);
+        console.log(listObject);
+        console.log("rectCreated");
+        render();
+        // isDrawing = false;
+    })
+
+    rectFunctions.listen("rectAborted", () => {
+        render();
+        console.log("aborted");
+    })
+
+    rectFunctions.listen("endPointCreated", () => {
+        render();
+        console.log("endPointCreated");
+    })
+
+    function resetBorderColor(){
+        document.getElementById("ControlButton").classList.remove("selectedtool");
+        document.getElementById("LineButton").classList.remove("selectedtool");
+        document.getElementById("SquareButton").classList.remove("selectedtool");
+        document.getElementById("RectangleButton").classList.remove("selectedtool");
+        document.getElementById("PolygonButton").classList.remove("selectedtool");
+    }
+
+    function deactivateAll(){
+        lineFunctions.deactivate();
+        squareFunctions.deactivate();
+        rectFunctions.deactivate();
+    }
+
+    document.getElementById("ControlButton").addEventListener("click", function() {
+        document.getElementById("whichShape").innerHTML = "using control tool!";
+        resetBorderColor();
+        this.classList.add("selectedtool");
+        isDrawing = false;
+        deactivateAll();
+        console.log("tesssssss");
+    });
+
     document.getElementById("LineButton").addEventListener("click", function() {
         document.getElementById("whichShape").innerHTML = "a line!";
+        resetBorderColor();
+        this.classList.add("selectedtool");
         isDrawing = true;
+        deactivateAll();
         lineFunctions.activate();
         console.log("tesssssss");
+    });
+    
+    document.getElementById("SquareButton").addEventListener("click", function() {
+        document.getElementById("whichShape").innerHTML = "a square!";
+        resetBorderColor();
+        this.classList.add("selectedtool");
+        isDrawing = true;
+        deactivateAll();
+        squareFunctions.activate();
+        console.log("tesssssss");
+    });
+
+    document.getElementById("RectangleButton").addEventListener("click", function() {
+        document.getElementById("whichShape").innerHTML = "a rectangle!";
+        resetBorderColor();
+        this.classList.add("selectedtool");
+        isDrawing = true;
+        deactivateAll();
+        rectFunctions.activate();
+        console.log("tesssssss");
+    });
+
+    document.getElementById("UndoButton").addEventListener("click", function() {
+        undoList.push(listObject.pop());
+        render();
     });
 
     document.getElementById("ClearButton").addEventListener("click", function() {
@@ -101,7 +195,16 @@ function main() {
         console.log(listObject)       
         semua = [];
         listObject.slice().forEach(element => {
-            semua.push(element.point1, element.point2)    
+            // console.log(element.constructor.name)
+            if(element.constructor.name == "Square" || element.constructor.name == "Rectangle")
+            {
+                semua.push(element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1)    
+            }
+            else
+            {
+                semua.push(element.point1,element.point2)
+            }
+            
         });
 
         var jumlahObject = semua.length;

@@ -11,3 +11,7 @@ canvas {
     float: left;
     /* padding: 10px; */
 }
+
+.selectedtool{
+    border-color: red;
+}
