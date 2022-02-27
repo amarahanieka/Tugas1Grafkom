@@ -77,7 +77,7 @@ function main() {
         render();
         console.log("endPointCreated");
     })
-
+  
     //square
     const squareFunctions = new SquareFunctions(canvas);
     
