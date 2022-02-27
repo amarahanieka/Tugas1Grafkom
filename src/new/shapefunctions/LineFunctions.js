@@ -80,13 +80,14 @@ class LineFunctions {
     };
 
     setPoint(e) {
-        // var x = e.clientX;
-        // var y = e.clientY;
-        // x = (x - this.canvas.width / 2) / (this.canvas.width / 2);
-        // y = (this.canvas.height / 2 - y) / (this.canvas.height / 2);
+        var x = e.clientX;
+        var y = e.clientY;
+        x = (x - this.canvas.width / 2) / (this.canvas.width / 2);
+        y = (this.canvas.height / 2 - y) / (this.canvas.height / 2);
 
-        const x = (2 * e.clientX) / this.canvas.width - 1;
-        const y = (-2 * e.clientY) / this.canvas.height + 1;
+
+        // const x = (2 * e.clientX) / this.canvas.width - 1;
+        // const y = (-2 * e.clientY) / this.canvas.height + 1;
 
         var pts = [x, y, 0];
         return pts;

@@ -54,6 +54,7 @@ function main() {
     var currTool = "";
     var isDrawing = false;
     let listObject = [];
+    var semua = [];
 
     // shapessss
     const lineFunctions = new LineFunctions(canvas);
@@ -84,14 +85,21 @@ function main() {
         isDrawing = true;
         lineFunctions.activate();
         console.log("tesssssss");
-
-        
     });
+
+    document.getElementById("ClearButton").addEventListener("click", function() {
+        document.getElementById("whichShape").innerHTML = "nothing.";
+        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
+        lineFunctions.deactivate();
+        console.log("tesssssss hapos");
+        listObject = [];
+        semua = [];
+    });
+
 
     function render() {
         // listObject.forEach((obj) => obj.render(gl, vBuffer, cBuffer));
         
-        var semua = [];
         
         
         listObject.slice().forEach(element => {
@@ -102,9 +110,14 @@ function main() {
         var vertices = [
             -0.5,0.5,0.0,
             0.0,0.5,0.0,
-            -0.25,0.25,0.0, 
+            -0.25,0.25,0.0,
+            0.5,0.5,0.0, 
          ];
 
+        var jumlahObject = semua.length;
+        
+        // bikin jadi rata
+        console.log(jumlahObject)
         semua = semua.flat(2);
 
         console.log(vertices);
@@ -120,8 +133,10 @@ function main() {
 
         // gl.clear( gl.COLOR_BUFFER_BIT);
         // gl.drawArrays(gl.LINES, 0, 2);
-        gl.drawArrays(gl.LINES, 0, 2);
-        gl.drawArrays(gl.POINTS, 0, 2);
+       
+
+        gl.drawArrays(gl.LINES, 0, jumlahObject);
+        gl.drawArrays(gl.POINTS, 0, jumlahObject);
         console.log("harusnya kalo sampe sini dah nongol woi")
     }
 }
