@@ -51,11 +51,14 @@ function main() {
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // var var varrrrr
-    var currTool = "";
     var isDrawing = false;
     let listObject = [];
     let undoList = [];
     var semua = [];
+    var lines = [];
+    var squares = [];
+    var rectangles = [];
+    var polygons = [];
 
     // shapessss
     const lineFunctions = new LineFunctions(canvas);
@@ -68,16 +71,16 @@ function main() {
         // isDrawing = false;
     })
 
-    lineFunctions.listen("lineAborted", () => {
-        render();
-        console.log("aborted");
-    })
+    // lineFunctions.listen("lineAborted", () => {
+    //     render();
+    //     console.log("aborted");
+    // })
 
     lineFunctions.listen("endPointCreated", () => {
         render();
         console.log("endPointCreated");
     })
-  
+
     //square
     const squareFunctions = new SquareFunctions(canvas);
     
@@ -89,10 +92,10 @@ function main() {
         // isDrawing = false;
     })
 
-    squareFunctions.listen("squareAborted", () => {
-        render();
-        console.log("aborted");
-    })
+    // squareFunctions.listen("squareAborted", () => {
+    //     render();
+    //     console.log("aborted");
+    // })
 
     squareFunctions.listen("endPointCreated", () => {
         render();
@@ -110,10 +113,10 @@ function main() {
         // isDrawing = false;
     })
 
-    rectFunctions.listen("rectAborted", () => {
-        render();
-        console.log("aborted");
-    })
+    // rectFunctions.listen("rectAborted", () => {
+    //     render();
+    //     console.log("aborted");
+    // })
 
     rectFunctions.listen("endPointCreated", () => {
         render();
@@ -328,44 +331,82 @@ function main() {
         console.log('listObject')      
         console.log(listObject)       
         semua = [];
+        lines = [];
+        squares = [];
+        rectangles = [];
+        polygons = [];
+
         listObject.slice().forEach(element => {
             // console.log(element.constructor.name)
-            if(element.constructor.name == "Square" || element.constructor.name == "Rectangle")
+            if(element.constructor.name == "Square")
             {
-                semua.push(element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1)    
+                squares.push(element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1)    
             }
-            else
+            else if (element.constructor.name == "Rectangle"){
+                rectangles.push(element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1)    
+            }
+            else if (element.constructor.name == "Line")
             {
-                semua.push(element.point1,element.point2)
+                lines.push(element.point1,element.point2)
+            }
+            else if (element.constructor.name == "Polygon")
+            {
+                lines.push(element.point1,element.point2)
             }
             
         });
 
-        var jumlahObject = semua.length;
-        
-        // bikin jadi rata
-        console.log(jumlahObject)
-        semua = semua.flat(2);
+        renderLine(lines);
+        renderSquare(squares);
+        renderSquare(rectangles);
+    }
 
-        console.log('semua: ');
-        console.log(semua);
+    function renderLine(lines) {
+        console.log("render line")
+        console.log(lines);
+        var jumlahLine = lines.length;
+
+        lines = lines.flat(3);
+        console.log("flat");
+        console.log(lines.flat(3));
 
         gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
        
         // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(semua), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lines), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
         gl.bindBuffer(gl.ARRAY_BUFFER, null)
 
         // gl.clear( gl.COLOR_BUFFER_BIT);
         // gl.drawArrays(gl.LINES, 0, 2);
        
+        gl.drawArrays(gl.LINES, 0, jumlahLine);
+        gl.drawArrays(gl.POINTS, 0, jumlahLine);
+    };
 
-        gl.drawArrays(gl.LINES, 0, jumlahObject);
-        gl.drawArrays(gl.POINTS, 0, jumlahObject);
-        console.log("harusnya kalo sampe sini dah nongol woi")
+    function renderSquare(lines) {
+        console.log("render PERKOTAKAN")
+        console.log(lines);
+        var jumlahLine = lines.length;
+
+        lines = lines.flat(3);
+        console.log("flat");
+        console.log(lines.flat(3));
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+       
+        // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lines), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null)
+
+        // gl.clear( gl.COLOR_BUFFER_BIT);
+        // gl.drawArrays(gl.LINES, 0, 2);
+       
+        gl.drawArrays(gl.LINES, 0, jumlahLine);
     }
 }
+
 
 
 
