@@ -122,6 +122,19 @@ function main() {
         console.log("endPointCreated");
     })
 
+    const polyFunctions = new PolygonFunctions(canvas);
+
+    // polygon
+    window.addEventListener('keydown', (e) => {
+        if(e.key == 'Enter' && polyFunctions.isDrawing) {
+            listObject.push(polyFunctions.givePoints())
+        }
+        render();
+        polyFunctions.deactivate();
+        polyFunctions.activate();
+        
+    })
+
     function resetBorderColor(){
         document.getElementById("ControlButton").classList.remove("selectedtool");
         document.getElementById("LineButton").classList.remove("selectedtool");
@@ -134,6 +147,7 @@ function main() {
         lineFunctions.deactivate();
         squareFunctions.deactivate();
         rectFunctions.deactivate();
+        polyFunctions.deactivate();
     }
 
     document.getElementById("ControlButton").addEventListener("click", function() {
@@ -181,7 +195,7 @@ function main() {
         this.classList.add("selectedtool");
         isDrawing = true;
         deactivateAll();
-        //polygonFunctions.activate();
+        polyFunctions.activate();
     });
 
     document.getElementById("UndoButton").addEventListener("click", function() {
@@ -328,7 +342,7 @@ function main() {
 
     function polygonHelp(){
         document.getElementById("whichShape").innerHTML = "<img src='img/icon_polygon.png'>Polygon Tool";
-        document.getElementById("toolDetail").innerHTML = "<p>Creates a polygon. Click on the canvas to mark the startpoint of the polygon, then keep clicking on the canvas for every vertex of the polygon. Right-click on the canvas to close the polygon.";
+        document.getElementById("toolDetail").innerHTML = "<p>Creates a polygon. Click on the canvas to mark the startpoint of the polygon, then keep clicking on the canvas for every vertex of the polygon. Click enter to render it.";
     }
 
     document.getElementById("HelpButton").addEventListener("click", function() {
@@ -361,7 +375,7 @@ function main() {
             }
             else if (element.constructor.name == "Polygon")
             {
-                //push dots to polygons
+                polygons.push(element.points)
             }
             
         });
@@ -369,6 +383,7 @@ function main() {
         renderLine(lines);
         renderSquare(squares);
         renderSquare(rectangles);
+        renderPolygon(polygons)
 
         lines = [];
         squares = [];
@@ -422,6 +437,30 @@ function main() {
             gl.drawArrays(gl.TRIANGLE_FAN, 0, 8);
             // gl.drawArrays(gl.POINTS, 0, 8);
         });
+    }
+
+    function renderPolygon(polygons) {
+        for (let i = 0; i < polygons.length; i++) {
+            const points = polygons[i];
+            const initialPoint = points[0]
+            for (let j = 1; j < points.length-1; j++) {
+                const point1 = points[j];
+                for (let k = 1; k < points.length-1; k++) {
+                    const point2 = points[k+1];
+                    
+                    const element = [initialPoint[0], initialPoint[1], 0, point1[0], point1[1], 0, point2[0], point2[1], 0]
+
+                    console.log(element);
+                    
+                    gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element), gl.STATIC_DRAW);
+                    gl.bindBuffer(gl.ARRAY_BUFFER, null)
+                    gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+                    gl.bindBuffer(gl.ARRAY_BUFFER, null)
+                    gl.drawArrays(gl.TRIANGLES, 0, 3);
+                }
+            }
+        }
     }
         
 }
