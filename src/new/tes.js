@@ -340,10 +340,10 @@ function main() {
             // console.log(element.constructor.name)
             if(element.constructor.name == "Square")
             {
-                squares.push(element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1)    
+                squares.push([element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1])    
             }
             else if (element.constructor.name == "Rectangle"){
-                rectangles.push(element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1)    
+                rectangles.push([element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1])    
             }
             else if (element.constructor.name == "Line")
             {
@@ -351,7 +351,7 @@ function main() {
             }
             else if (element.constructor.name == "Polygon")
             {
-                lines.push(element.point1,element.point2)
+                //push dots to polygons
             }
             
         });
@@ -359,6 +359,11 @@ function main() {
         renderLine(lines);
         renderSquare(squares);
         renderSquare(rectangles);
+
+        lines = [];
+        squares = [];
+        rectangles = [];
+        polygons = [];
     }
 
     function renderLine(lines) {
@@ -384,27 +389,31 @@ function main() {
         gl.drawArrays(gl.POINTS, 0, jumlahLine);
     };
 
-    function renderSquare(lines) {
+    function renderSquare(a) {
         console.log("render PERKOTAKAN")
-        console.log(lines);
-        var jumlahLine = lines.length;
+        var jumlahLine = a.length;
+        
+        console.log("UNflat");
+        console.log(a);
 
-        lines = lines.flat(3);
-        console.log("flat");
-        console.log(lines.flat(3));
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+        a.forEach(element => {
+            console.log("masuk foreach")
+            element = element.flat(2);
+            // console.log("flatter");
+            // console.log(element);
+            gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
        
-        // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lines), gl.STATIC_DRAW);
-        gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-        gl.bindBuffer(gl.ARRAY_BUFFER, null)
-
-        // gl.clear( gl.COLOR_BUFFER_BIT);
-        // gl.drawArrays(gl.LINES, 0, 2);
-       
-        gl.drawArrays(gl.LINES, 0, jumlahLine);
+            // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element), gl.STATIC_DRAW);
+            gl.bindBuffer(gl.ARRAY_BUFFER, null)
+            gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, null)
+            gl.drawArrays(gl.TRIANGLE_FAN, 0, 8);
+            // gl.drawArrays(gl.POINTS, 0, 8);
+        });
     }
+        
 }
 
 
