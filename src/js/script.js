@@ -18,6 +18,10 @@ class object{
     constructor(type){
         this.type = type;
     }
+    getType(){
+        return this.type;
+    }
+    
 }
 
 class points extends object{
@@ -59,6 +63,74 @@ class square extends object{
     }
  }
 
+function drawScene() {
+    for (let i = 0; i < objects.length; i++) {
+        const obj = objects[i];
+        drawObject(obj);
+    }
+}
+
+function drawObject(obj) {
+    if (obj.getType() == 1) {
+        drawPoint(obj);
+    } else if (obj.getType() == 2) {
+        drawLine(obj);
+    } else if(obj.getType() == 3) {
+        drawSquare(obj)
+    } else if(obj.getType() == 4) {
+        drawRectangle(obj)
+    } else if (obj.getType() == 5) {
+        drawPolygon(obj);
+    }
+}
+
+function drawPoint(obj) {
+    gl.useProgram(shaderProgram);
+    points = [obj.getVertex().x, obj.getVertex().y];
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+
+    const vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+    const uniformCol = gl.getUniformLocation(shaderProgram, 'uColor');
+    const projectionLocation = gl.getUniformLocation(
+        shaderProgram,
+        'uProjectionMatrix'
+    );
+
+    gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.uniformMatrix3fv(projectionLocation, false, obj.getProjectionMatrix());
+    gl.uniform4fv(uniformCol, obj.getColor());
+    gl.enableVertexAttribArray(vertexPosition);
+    gl.drawArrays(gl.POINTS, 0, 1);
+}
+
+function drawLine(obj) {
+    gl.useProgram(shaderProgram);
+    const points = [
+        obj.getPoints()[0].x,
+        obj.getPoints()[0].y,
+        obj.getPoints()[1].x,
+        obj.getPoints()[1].y,
+    ];
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+
+    const vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+    const uniformCol = gl.getUniformLocation(shaderProgram, 'uColor');
+    const projectionLocation = gl.getUniformLocation(
+        shaderProgram,
+        'uProjectionMatrix'
+    );
+
+    gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.uniformMatrix3fv(projectionLocation, false, obj.getProjectionMatrix());
+    gl.uniform4fv(uniformCol, obj.getColor());
+    gl.enableVertexAttribArray(vertexPosition);
+
+    gl.drawArrays(gl.LINES, 0, 2);
+}
 function main() {
     var canvas = document.getElementById("gl-canvas");
     gl = canvas.getContext("webgl");
