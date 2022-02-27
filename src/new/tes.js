@@ -15,7 +15,7 @@ const fsSource = `
 
 function main() {
     var canvas = document.getElementById("gl-canvas");
-    gl = canvas.getContext("webgl");
+    gl = canvas.getContext("webgl", {preserveDrawingBuffer: true});
     // gl = canvas.getContext("webgl", { preserveDrawingBuffer: true });
 
     var vs = gl.createShader(gl.VERTEX_SHADER);
@@ -53,7 +53,6 @@ function main() {
     // var var varrrrr
     var isDrawing = false;
     let listObject = [];
-    let undoList = [];
     var semua = [];
     var lines = [];
     var squares = [];
@@ -186,7 +185,9 @@ function main() {
     });
 
     document.getElementById("UndoButton").addEventListener("click", function() {
-        undoList.push(listObject.pop());
+        resetBorderColor();
+        listObject.pop();
+        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
         render();
     });
 
@@ -288,6 +289,15 @@ function main() {
         }
 
         input.click();
+    });
+
+    document.getElementById("ExportButton").addEventListener("click", function() {
+        console.log(canvas.toDataURL());
+        let imgdata = document.createElement("a");
+        imgdata.download = 'canvas_img.png';
+        imgdata.href = canvas.toDataURL();
+        imgdata.click();
+        imgdata.delete;
     });
 
     // Misc. Menu buttons

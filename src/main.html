@@ -38,6 +38,7 @@
                             <li><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li>
                             <li><b>Load file:</b> Loads canvas from a saved file.</li>
                             <li><b>Save current file:</b> Saves current canvas into a file.</li>
+                            <li><b>Export:</b> Saves current canvas into an image.</li>
                             <li><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li>
                             <li><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li>
                             <li><b>Show help:</b> Shows this help menu.</li>
@@ -64,10 +65,11 @@
                     <div>File Menu</div>
                     <button id="LoadButton"><img src='img/icon_load.png'><br>Load file</button>
                     <button id="SaveButton"><img src='img/icon_save.png'><br>Save current file</button>
+                    <button id="ExportButton"><img src='img/icon_export.png'><br>Export</button>
                 </div> <br>
                 <div style="padding:10px; background-color:#bbb;">
                     <div>Color Menu</div>
-                    <input type="color" />
+                    <input id="colorValue" type="color" />
                     <button id="FillButton">Fill Color</button>
                     <button id="StrokeButton">Stroke Color</button>
                 </div> <br>
