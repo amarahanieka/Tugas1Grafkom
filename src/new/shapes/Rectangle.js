@@ -1,10 +1,10 @@
 class Rectangle {
-    constructor(point1, point3){
+    constructor(point1, point3, color){
         this.point1 = point1;
         this.point3 = point3;
         this.point2 = [point1[0],point3[1],0]
         this.point4 = [point3[0],point1[1],0]
-        // this.color = color;
+        this.color = color;
     }
 
     render(context, vb, cb){

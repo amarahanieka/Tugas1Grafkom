@@ -1,5 +1,5 @@
 class Square {
-    constructor(point1, point3){
+    constructor(point1, point3, color){
         const canvasXYratio = 500/800
         this.point1 = point1;
         let dist = Math.abs(point1[1]-point3[1])
@@ -17,7 +17,7 @@ class Square {
 
         this.point2 = [point1[0],this.point3[1],0]
         this.point4 = [this.point3[0],point1[1],0]
-        // this.color = color;
+        this.color = color;
     }
 
     render(context, vb, cb){

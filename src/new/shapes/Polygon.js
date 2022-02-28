@@ -1,6 +1,7 @@
 class Polygon {
-    constructor(points) {
+    constructor(points,color) {
         this.points = points
+        this.color = color
     }
 
     render(context, vb, cb){

@@ -1,8 +1,9 @@
 class Line {
-    constructor(point1, point2){
+    constructor(point1, point2, color){
         this.point1 = point1;
         this.point2 = point2;
-        // this.color = color;
+        this.color = color;
+        console.log("warna ",color);
     }
 
     render(context, vb, cb){

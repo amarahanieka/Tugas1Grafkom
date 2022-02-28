@@ -21,7 +21,7 @@ class SquareFunctions {
                 }
                 this.sendEvent(
                     "squareCreated",
-                    new Square(this.startpoint, this.endpoint)
+                    new Square(this.startpoint, this.endpoint, document.getElementById("colorValue").value)
                 );
 
                 this.isDrawing = false;

@@ -21,7 +21,7 @@ class RectangleFunctions {
                 }
                 this.sendEvent(
                     "rectCreated",
-                    new Rectangle(this.startpoint, this.endpoint)
+                    new Rectangle(this.startpoint, this.endpoint, document.getElementById("colorValue").value)
                 );
 
                 this.isDrawing = false;

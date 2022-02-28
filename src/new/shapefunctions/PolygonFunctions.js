@@ -41,6 +41,6 @@ class PolygonFunctions {
     };
 
     givePoints() {
-        return new Polygon(this.points)
+        return new Polygon(this.points, document.getElementById("colorValue").value)
     }
 }

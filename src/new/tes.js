@@ -1,15 +1,19 @@
 const vsSource = `
     attribute vec2 aVertexPosition;
     attribute vec3 aVertexColor;
+    varying vec3 vColor;
     void main() {
         gl_PointSize = 10.0;
         gl_Position = vec4(aVertexPosition, 0.0, 1.0);
+        vColor = aVertexColor;
     }
 `;
 
 const fsSource = `
+    precision mediump float;
+    varying vec3 vColor;
     void main() {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+        gl_FragColor = vec4(vColor, 1.0);
     }
 `;
 
@@ -30,6 +34,10 @@ function main() {
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) 
+    console.log(gl.getProgramInfoLog(program))
+    var error_log = gl.getShaderInfoLog(fs);
+    console.log(error_log);
 
     gl.useProgram(program);
 
@@ -43,8 +51,9 @@ function main() {
     var cBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
     program.aVertexColor = gl.getAttribLocation(program, "aVertexColor");
-    // gl.vertexAttribPointer(program.aVertexColor, 3, gl.FLOAT, false, 0, 0);
-    // gl.enableVertexAttribArray(program.aVertexColor);
+    console.log(program.aVertexColor)
+    gl.vertexAttribPointer(program.aVertexColor, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(program.aVertexColor);
 
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     // gl.enable(gl.DEPTH_TEST);
@@ -356,39 +365,59 @@ function main() {
         console.log(listObject)       
         semua = [];
         lines = [];
+        linescolor = [];
         squares = [];
+        sqcolor = [];
         rectangles = [];
+        rectcolor = [];
         polygons = [];
+        polycolor = [];
 
         listObject.slice().forEach(element => {
             // console.log(element.constructor.name)
             if(element.constructor.name == "Square")
             {
-                squares.push([element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1])    
+                squares.push([element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1])   
+                let tmp = hexToRGBA(element.color)
+                sqcolor.push(tmp,tmp,tmp,tmp,tmp,tmp,tmp,tmp)
+                
             }
             else if (element.constructor.name == "Rectangle"){
-                rectangles.push([element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1])    
+                rectangles.push([element.point1, element.point2, element.point2, element.point3, element.point3, element.point4, element.point4, element.point1])
+                let tmp = hexToRGBA(element.color)
+                rectcolor.push(tmp,tmp,tmp,tmp,tmp,tmp,tmp,tmp)
             }
             else if (element.constructor.name == "Line")
             {
                 lines.push(element.point1,element.point2)
+                let tmp = hexToRGBA(element.color)
+                linescolor.push(tmp,tmp)
             }
             else if (element.constructor.name == "Polygon")
             {
                 polygons.push(element.points)
+                console.log("banyak vertex",element.points.length)
+                let tmp = hexToRGBA(element.color)
+                for (let i = 0; i < element.points.length; i++) {
+                    polycolor.push(tmp)
+                }
             }
             
         });
 
         renderLine(lines);
-        renderSquare(squares);
-        renderSquare(rectangles);
+        renderSquare(squares, sqcolor);
+        renderSquare(rectangles, rectcolor);
         renderPolygon(polygons)
 
         lines = [];
+        linescolor = [];
         squares = [];
+        sqcolor = [];
         rectangles = [];
+        rectcolor = [];
         polygons = [];
+        polycolor = [];
     }
 
     function renderLine(lines) {
@@ -404,7 +433,11 @@ function main() {
        
         // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lines), gl.STATIC_DRAW);
+
         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+        linescolor = linescolor.flat(2);
+        console.log("linescolor:",linescolor)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(linescolor), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null)
 
         // gl.clear( gl.COLOR_BUFFER_BIT);
@@ -414,29 +447,45 @@ function main() {
         gl.drawArrays(gl.POINTS, 0, jumlahLine);
     };
 
-    function renderSquare(a) {
+    function hexToRGBA(hex){
+        let R = parseInt(hex.substr(1, 2),16)/255;
+        let G = parseInt(hex.substr(3, 2),16)/255;
+        let B = parseInt(hex.substr(5, 2),16)/255;
+        let A = 1.0;
+
+        console.log("RGBA: ",R,G,B,A)
+        return [R, G, B];
+    }
+
+    function renderSquare(a, c) {
         console.log("render PERKOTAKAN")
-        var jumlahLine = a.length;
         
         console.log("UNflat");
         console.log(a);
 
-
+        c = c.flat(2);
+        
         a.forEach(element => {
             console.log("masuk foreach")
+            var jumlahSq = element.length;
             element = element.flat(2);
-            // console.log("flatter");
-            // console.log(element);
+            console.log("flatter");
+            console.log(element);
             gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
        
             // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element), gl.STATIC_DRAW);
-            gl.bindBuffer(gl.ARRAY_BUFFER, null)
+            console.log("element: ",element)
+
             gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+            console.log("sq/rectcolor: ",c)
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(c), gl.STATIC_DRAW);
             gl.bindBuffer(gl.ARRAY_BUFFER, null)
-            gl.drawArrays(gl.TRIANGLE_FAN, 0, 8);
+
+            gl.drawArrays(gl.TRIANGLE_FAN, 0, jumlahSq);
             // gl.drawArrays(gl.POINTS, 0, 8);
         });
+        
     }
 
     function renderPolygon(polygons) {
@@ -456,6 +505,9 @@ function main() {
                     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(element), gl.STATIC_DRAW);
                     gl.bindBuffer(gl.ARRAY_BUFFER, null)
                     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+                    polycolor = polycolor.flat(2);
+                    console.log("polycolor:",polycolor)
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(polycolor), gl.STATIC_DRAW);
                     gl.bindBuffer(gl.ARRAY_BUFFER, null)
                     gl.drawArrays(gl.TRIANGLES, 0, 3);
                 }

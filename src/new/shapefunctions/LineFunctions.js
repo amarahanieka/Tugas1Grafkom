@@ -21,7 +21,7 @@ class LineFunctions {
                 }
                 this.sendEvent(
                     "lineCreated",
-                    new Line(this.startpoint, this.endpoint)
+                    new Line(this.startpoint, this.endpoint, document.getElementById("colorValue").value)
                 );
 
                 this.isDrawing = false;
