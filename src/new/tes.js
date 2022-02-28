@@ -233,6 +233,7 @@ function main() {
         var savedata = document.createElement("a");
         savedata.setAttribute("download", "canvas_data.cad");
         var datatext = "data:text/cad,";
+        console.log(listObject)
         listObject.forEach(element => {
             datatext += element.constructor.name;
             datatext += "\n";
@@ -246,13 +247,26 @@ function main() {
                 datatext += ";"
                 datatext += element.point4.toString();
             }
-            else
+            else if(element.constructor.name == "Line")
             {
                 datatext += element.point1.toString();
                 datatext += ";"
                 datatext += element.point2.toString();
             }
+            else{
+                for(let k = 0;k<element.points.length;k++)
+                {
+                    datatext += element.points[k].toString();
+                    datatext += ";"
+                }
+            }
             datatext += "\n";
+
+            // Color:
+            datatext += element.color.substr(1,6);
+            datatext += "\n";
+
+            console.log("saving... ",datatext)
         });
         savedata.setAttribute("href", datatext);
         document.body.appendChild(savedata);
@@ -275,10 +289,11 @@ function main() {
                 
                 clearAll();
 
-                for (let k = 0; k < arrfile.length; k+=2) {
+                for (let k = 0; k < arrfile.length; k+=3) {
                     let shape = arrfile[k];
                     let arrtemp = arrfile[k+1].split(';');
                     let arrpoints = []
+                    let tempcolor = "#" + arrfile[k+2]
                     console.log("parse ",k)
 
                     for (let j = 0; j < arrtemp.length; j+=1) {
@@ -289,21 +304,22 @@ function main() {
                     }
 
                     if(shape == "Line"){
-                        let obj = new Line(arrpoints[0], arrpoints[1]);
+                        let obj = new Line(arrpoints[0], arrpoints[1], tempcolor);
                         listObject.push(obj);
                     }
 
                     else if(shape == "Square"){
-                        let obj = new Square(arrpoints[0], arrpoints[2]);
+                        let obj = new Square(arrpoints[0], arrpoints[2], tempcolor);
                         listObject.push(obj);
                     }
 
                     else if(shape == "Rectangle"){
-                        let obj = new Rectangle(arrpoints[0], arrpoints[2]);
+                        let obj = new Rectangle(arrpoints[0], arrpoints[2], tempcolor);
                         listObject.push(obj);
                     }
                     else{
-                        //..Polygon...
+                        let obj = new Polygon(arrpoints, tempcolor);
+                        listObject.push(obj);
                     }
                 }
 
@@ -405,10 +421,10 @@ function main() {
             
         });
 
-        renderLine(lines);
         renderSquare(squares, sqcolor);
         renderSquare(rectangles, rectcolor);
-        renderPolygon(polygons)
+        renderPolygon(polygons);
+        renderLine(lines);
 
         lines = [];
         linescolor = [];
@@ -522,11 +538,9 @@ function main() {
                     gl.bindBuffer(gl.ARRAY_BUFFER, null)
                     gl.drawArrays(gl.TRIANGLES, 0, 3);
                 }
-
-                console.log("POINTS on polygon ",points.length)
-                polycolor.splice(0, points.length*3);
-
             }
+            console.log("POINTS on polygon ",points.length)
+            polycolor.splice(0, points.length*3);
         }
     }
         
