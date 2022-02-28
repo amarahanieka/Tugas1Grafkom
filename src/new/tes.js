@@ -204,6 +204,21 @@ function main() {
                     listObject.push(new Square(tempP1, pointakhir, tempcolorP1));
                     break;
                 }
+                // else if (closePointsRect[0][1] == "point2"){
+                //     let tempP2 = new Square(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                //     listObject.splice(j, 1);
+                //     tempP2 = tempP2.changeP2(pointakhir, tempP2.point1, tempP2.point3, tempP2.color);
+                //     listObject.push(tempP2);
+                //     break;
+                // }
+                // else if (closePointsRect[0][1] == "point4"){
+                //     let tempP4 = new Square(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                //     listObject.splice(j, 1);
+                //     tempP4 = tempP4.changeP4(pointakhir, tempP4.point1, tempP4.point3, tempP4.color);
+                //     listObject.push(tempP4);
+                //     break;
+                // }
+
             } 
         };
         
@@ -243,18 +258,18 @@ function main() {
                     closePointsRect.push([j, "point1"]);
                     break;
                 }
-                // else  if (cekpoint2 < batas && cekpoint2 != NaN){
-                //     closePointsRect.push([j, "point2"]);
-                //     break;
-                // }
+                else  if (cekpoint2 < batas && cekpoint2 != NaN){
+                    closePointsRect.push([j, "point2"]);
+                    break;
+                }
                 else  if (cekpoint3 < batas && cekpoint3 != NaN){
                     closePointsRect.push([j, "point3"]);
                     break;
                 }
-                // else  if (cekpoint4 < batas && cekpoint4 != NaN){
-                //     closePointsRect.push([j, "point4"]);
-                //     break;
-                // }
+                else  if (cekpoint4 < batas && cekpoint4 != NaN){
+                    closePointsRect.push([j, "point4"]);
+                    break;
+                }
             }
 
         };
@@ -270,10 +285,24 @@ function main() {
                     listObject.push(new Rectangle(pointakhir, tempP3.point3, tempP3.color));
                     break;
                 }
+                else if (closePointsRect[0][1] == "point2"){
+                    let tempP2 = new Rectangle(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                    listObject.splice(j, 1);
+                    tempP2 = tempP2.changeP2(pointakhir, tempP2.point1, tempP2.point3, tempP2.color);
+                    listObject.push(tempP2);
+                    break;
+                }
                 else if (closePointsRect[0][1] == "point3"){
                     let tempP1 = new Rectangle(listObject[j].point1, listObject[j].point3, listObject[j].color)
                     listObject.splice(j, 1);
                     listObject.push(new Rectangle(tempP1.point1, pointakhir, tempP1.color));
+                    break;
+                }
+                else if (closePointsRect[0][1] == "point4"){
+                    let tempP4 = new Rectangle(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                    listObject.splice(j, 1);
+                    tempP4 = tempP4.changeP4(pointakhir, tempP4.point1, tempP4.point3, tempP4.color);
+                    listObject.push(tempP4);
                     break;
                 }
             } 

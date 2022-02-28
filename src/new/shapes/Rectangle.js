@@ -7,6 +7,18 @@ class Rectangle {
         this.color = color;
     }
 
+    changeP4(p4, p1, p3, color){
+        p1[1] = p4[1];
+        p3[0] = p4[0];
+        return new Rectangle(p1, p3, color);
+    }
+
+    changeP2(p2, p1, p3, color){
+        p1[0] = p2[0];
+        p3[1] = p2[1];
+        return new Rectangle(p1, p3, color);
+    }
+
     // render(context, vb, cb){
     //     context.bindBuffer(context.ARRAY_BUFFER, vb);
     //     var p1 = this.point1.toString()+',0.0,'
