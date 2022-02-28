@@ -541,7 +541,7 @@ function main() {
     // Misc. Menu buttons
     function showHelp(){
         document.getElementById("whichShape").innerHTML = "<img src='img/icon_help.png'>Instructions / Help";
-        document.getElementById("toolDetail").innerHTML = "<p>How to use: <ol> <li>Click one of the tools from the menu on the right side of the screen. Detailed instructions on how to use the tool will show up on the bottom of the screen.</li> <li>Use the tool by clicking inside the canvas area.</li> <li>The [Show help] button can be used to show this instructions on the screen again.</li> </ol> </p> <p>List of tools: <ul> <li><img src='img/icon_control.png'><b>Control:</b> Use to pick a shape and edit its colors/position.</li> <li><img src='img/icon_line.png'><b>Line:</b> Creates a straight line.</li> <li><img src='img/icon_square.png'><b>Square:</b> Creates a square.</li> <li><img src='img/icon_rect.png'><b>Rectangle:</b> Creates a rectangle.</li> <li><img src='img/icon_polygon.png'><b>Polygon:</b> Creates a polygon.</li> <li><img src='img/icon_undo.png'><b>Undo Draw:</b> Deletes last created shape.</li> <li><img src='img/icon_clear.png'><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li> <li><img src='img/icon_load.png'><b>Load file:</b> Loads canvas from a saved file.</li> <li><img src='img/icon_save.png'><b>Save current file:</b> Saves current canvas into a file.</li> <li><img src='img/icon_export.png'><b>Export:</b> Saves current canvas into an image.</li> <li><img src='img/icon_fill.png'><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li> <li><img src='img/icon_stroke.png'><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li> <li><img src='img/icon_help.png'><b>Show help:</b> Shows this help menu.</li> <li><img src='img/icon_point.png'><b>Toggle points:</b> Shows/hides all control points.</li> </ul> </p>";
+        document.getElementById("toolDetail").innerHTML = "<p>How to use: <ol> <li>Click one of the tools from the menu on the right side of the screen. Detailed instructions on how to use the tool will show up on the bottom of the screen.</li> <li>Use the tool by clicking inside the canvas area.</li> <li>The [Show help] button can be used to show this instructions on the screen again.</li> </ol> </p> <p>List of tools: <ul> <li><img src='img/icon_control.png'><b>Control:</b> Use to pick a shape and edit its colors/position.</li> <li><img src='img/icon_line.png'><b>Line:</b> Creates a straight line.</li> <li><img src='img/icon_square.png'><b>Square:</b> Creates a square.</li> <li><img src='img/icon_rect.png'><b>Rectangle:</b> Creates a rectangle.</li> <li><img src='img/icon_polygon.png'><b>Polygon:</b> Creates a polygon.</li> <li><img src='img/icon_undo.png'><b>Undo Draw:</b> Deletes last created shape.</li> <li><img src='img/icon_clear.png'><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li> <li><img src='img/icon_load.png'><b>Load file:</b> Loads canvas from a saved file.</li> <li><img src='img/icon_save.png'><b>Save current file:</b> Saves current canvas into a file.</li> <li><img src='img/icon_export.png'><b>Export:</b> Saves current canvas into an image.</li> <li><img src='img/icon_fill.png'><b>Fill color:</b> Changes the color of a shape according to color input.</li> <li><img src='img/icon_help.png'><b>Show help:</b> Shows this help menu.</li> <li><img src='img/icon_point.png'><b>Toggle points:</b> Shows/hides all control points.</li><li><img src='img/icon_show.png'><b>Refresh object list:</b> Refreshes and shows object list.</li><li><img src='img/icon_hide.png'><b>Hide object list:</b> Hides object list.</li> </ul> </p>";
     }
 
     function controlHelp(){
@@ -571,6 +571,62 @@ function main() {
 
     document.getElementById("HelpButton").addEventListener("click", function() {
         showHelp();
+    });
+
+    function countNthShape(stype, idx){
+        let count = -1;
+        for(let i = 0;i<=idx;i++)
+        {
+            if(listObject[i].constructor.name==stype)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    document.getElementById("FillButton").addEventListener("click", function() {
+        var id = document.getElementById("colorValueID").value;
+        var newcolor = document.getElementById("colorValue").value;
+        if(id>=0 && id<listObject.length)
+        {
+            listObject[id].color = newcolor;
+        }
+        render();
+    });
+
+    document.getElementById("HideList").addEventListener("click", function() {
+        document.getElementById("objList").innerHTML = "";
+    });
+
+    document.getElementById("RefreshList").addEventListener("click", function() {
+        var txt = "";
+        var counter = 0
+        listObject.forEach(element => {
+            txt += "ID: " + counter + " - "
+            txt += element.constructor.name + " - " + element.color;
+            if(element.constructor.name == "Line")
+            {
+                txt += "<br>(" + element.point1.toString() + "; " + element.point2.toString() + ")"
+            }
+            else if(element.constructor.name == "Square" || element.constructor.name == "Rectangle")
+            {
+                txt += "<br>(" + element.point1.toString() + "; " + element.point2.toString() + "; " + element.point3.toString() + "; " + element.point4.toString() + ")"
+            }
+            else
+            {
+                txt += "<br>(" + element.points[0]
+                for(let x = 1;x<element.points.length;x++)
+                {
+                    txt += "; " + element.points[x]
+                }
+                txt += ")"
+            }
+            txt += "<br><br>"
+            counter++;
+        });
+        document.getElementById("objList").innerHTML = txt;
+        
     });
 
     document.getElementById("PointButton").addEventListener("click", function() {

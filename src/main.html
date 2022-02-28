@@ -39,10 +39,11 @@
                             <li><img src='img/icon_load.png'><b>Load file:</b> Loads canvas from a saved file.</li>
                             <li><img src='img/icon_save.png'><b>Save current file:</b> Saves current canvas into a file.</li>
                             <li><img src='img/icon_export.png'><b>Export:</b> Saves current canvas into an image.</li>
-                            <li><img src='img/icon_fill.png'><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li>
-                            <li><img src='img/icon_stroke.png'><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li>
+                            <li><img src='img/icon_fill.png'><b>Fill color:</b> Changes the color of a shape according to color input.</li>
                             <li><img src='img/icon_help.png'><b>Show help:</b> Shows this help menu.</li>
                             <li><img src='img/icon_point.png'><b>Toggle points:</b> Shows/hides all control points.</li>
+                            <li><img src='img/icon_show.png'><b>Refresh object list:</b> Refreshes and shows object list.</li>
+                            <li><img src='img/icon_hide.png'><b>Hide object list:</b> Hides object list.</li>
                         </ul>
                     </p>
                 </div>
@@ -71,14 +72,19 @@
                 <div style="padding:10px; background-color:#bbb;">
                     <div>Color Menu</div>
                     <input id="colorValue" type="color" />
+                    ObjectID:<input id="colorValueID" type="number" min="0"/>
                     <button id="FillButton"><img src='img/icon_fill.png'>Fill Color</button>
-                    <button id="StrokeButton"><img src='img/icon_stroke.png'>Stroke Color</button>
                 </div> <br>
                 <div style="padding:10px; background-color:#bbb;">
                     <div>Misc.</div>
                     <button id="HelpButton"><img src='img/icon_help.png'><br>Show Help</button>
                     <button id="PointButton"><img src='img/icon_point.png'><br>Toggle Points</button>
-                </div>    
+                    <button id="RefreshList"><img src='img/icon_show.png'><br>Refresh Object List</button>
+                    <button id="HideList"><img src='img/icon_hide.png'><br>Hide Object List</button>
+                </div>
+                <div id="objList">
+
+                </div> 
             </div>
         </div>
 
