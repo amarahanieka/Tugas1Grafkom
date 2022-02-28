@@ -102,18 +102,36 @@ function main() {
         pointAwal = pointawal;
         var batas = 0.2;
         var i = 0;
-        listObject.forEach(element => {
-            var cekpoint1 = distance(pointawal, element.point1);
-            var cekpoint2 = distance(pointawal, element.point2);
+        // listObject.forEach(element => {
+        //     var cekpoint1 = distance(pointawal, element.point1);
+        //     var cekpoint2 = distance(pointawal, element.point2);
+
+        //     if (cekpoint1 < batas && cekpoint1 != NaN){
+        //         closePoints.push([i, "point1"])
+        //     }
+        //     else  if (cekpoint2 < batas && cekpoint2 != NaN){
+        //         closePoints.push([i, "point2"])
+        //     }
+        //     i++;
+        // });
+
+        for (let j = 0; j < listObject.length; j++) {
+            var cekpoint1 = distance(pointawal, listObject[j].point1);
+            var cekpoint2 = distance(pointawal, listObject[j].point2);
 
             if (cekpoint1 < batas && cekpoint1 != NaN){
-                closePoints.push([i, "point1"])
+                closePoints.push([i, "point1"]);
+                break;
             }
             else  if (cekpoint2 < batas && cekpoint2 != NaN){
-                closePoints.push([i, "point2"])
+                closePoints.push([i, "point2"]);
+                break;
             }
-            i++;
-        });
+            else{
+                i++;
+            }
+        };
+
         console.log("closepoints");
         console.log(closePoints)
         
@@ -129,20 +147,37 @@ function main() {
 
     lineFunctions.listen("pointAkhirChosen", (pointakhir) => {
         var ii = 0;
-        listObject.forEach(element => {
+        // listObject.forEach(element => {
+        //     if (ii == closePoints[0][0]) {
+        //         if (closePoints[0][1] == "point1"){
+        //             element.point1 = pointakhir;
+        //         }
+        //         else if (closePoints[0][1] == "point2"){
+        //             element.point2 = pointakhir;
+        //         }
+        //     } 
+        //     else {
+        //         ii++;
+        //     }
+        // });
+
+        for (let j = 0; j < listObject.length; j++) {
             if (ii == closePoints[0][0]) {
                 if (closePoints[0][1] == "point1"){
-                    element.point1 = pointakhir;
+                    listObject[j].point1 = pointakhir;
+                    break;
                 }
                 else if (closePoints[0][1] == "point2"){
-                    element.point2 = pointakhir;
+                    listObject[j].point2 = pointakhir;
+                    break;
                 }
             } 
             else {
                 ii++;
             }
-        });
-
+        };
+        
+        closePoints = [];
         gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
         render();
     })
