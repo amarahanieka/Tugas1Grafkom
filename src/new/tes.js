@@ -521,6 +521,11 @@ function main() {
             gl.bindBuffer(gl.ARRAY_BUFFER, null)
 
             gl.drawArrays(gl.TRIANGLE_FAN, 0, 8);
+
+            if(isPointVisible)
+        {
+            gl.drawArrays(gl.POINTS, 0, 8);
+        }
             // gl.drawArrays(gl.POINTS, 0, 8);
         });
         
@@ -551,10 +556,16 @@ function main() {
                     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(polycolor), gl.STATIC_DRAW);
                     gl.bindBuffer(gl.ARRAY_BUFFER, null)
                     gl.drawArrays(gl.TRIANGLES, 0, 3);
+                    if(isPointVisible)
+                    {
+                        gl.drawArrays(gl.POINTS, 0, 3);
+                    }
                 }
             }
             console.log("POINTS on polygon ",points.length)
             polycolor.splice(0, points.length*3);
+
+
         }
     }
         
