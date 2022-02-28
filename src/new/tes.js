@@ -141,11 +141,10 @@ function main() {
     window.addEventListener('keydown', (e) => {
         if(e.key == 'Enter' && polyFunctions.isDrawing) {
             listObject.push(polyFunctions.givePoints())
+            render();
+            polyFunctions.deactivate();
+            polyFunctions.activate();
         }
-        render();
-        polyFunctions.deactivate();
-        polyFunctions.activate();
-        
     })
 
     function resetBorderColor(){
@@ -161,6 +160,7 @@ function main() {
         squareFunctions.deactivate();
         rectFunctions.deactivate();
         polyFunctions.deactivate();
+        isDrawing = false;
     }
 
     document.getElementById("ControlButton").addEventListener("click", function() {
