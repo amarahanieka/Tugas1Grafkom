@@ -73,7 +73,10 @@ function main() {
     var polygons = [];
     var closePoints = [];
     var closePointsSquare = [];
+    var closePointsRect = [];
     var pointAwal = null;
+
+    var batas = 0.05;
 
     // shapessss
     const lineFunctions = new LineFunctions(canvas);
@@ -94,7 +97,6 @@ function main() {
 
     lineFunctions.listen("pointAwalChosen", (pointawal) => {
         pointAwal = pointawal;
-        var batas = 0.05;
         // var i = 0;
 
         for (let j = 0; j < listObject.length; j++) {
@@ -154,7 +156,6 @@ function main() {
 
     squareFunctions.listen("pointAwalChosen", (pointawal) => {
         pointAwal = pointawal;
-        var batas = 0.05;
         // var i = 0;
 
         for (let j = 0; j < listObject.length; j++) {
@@ -227,6 +228,62 @@ function main() {
         console.log("endPointCreated");
     })
 
+    rectFunctions.listen("pointAwalChosen", (pointawal) => {
+        pointAwal = pointawal;
+        // var i = 0;
+
+        for (let j = 0; j < listObject.length; j++) {
+            if (listObject[j].constructor.name == "Rectangle") {
+                var cekpoint1 = distance(pointawal, listObject[j].point1);
+                var cekpoint2 = distance(pointawal, listObject[j].point2);
+                var cekpoint3 = distance(pointawal, listObject[j].point3);
+                var cekpoint4 = distance(pointawal, listObject[j].point4);
+    
+                if (cekpoint1 < batas && cekpoint1 != NaN){
+                    closePointsRect.push([j, "point1"]);
+                    break;
+                }
+                // else  if (cekpoint2 < batas && cekpoint2 != NaN){
+                //     closePointsRect.push([j, "point2"]);
+                //     break;
+                // }
+                else  if (cekpoint3 < batas && cekpoint3 != NaN){
+                    closePointsRect.push([j, "point3"]);
+                    break;
+                }
+                // else  if (cekpoint4 < batas && cekpoint4 != NaN){
+                //     closePointsRect.push([j, "point4"]);
+                //     break;
+                // }
+            }
+
+        };
+        
+    })
+
+    rectFunctions.listen("pointAkhirChosen", (pointakhir) => {
+        for (let j = 0; j < listObject.length; j++) {
+            if (j == closePointsRect[0][0]) {
+                if (closePointsRect[0][1] == "point1"){
+                    let tempP3 = new Rectangle(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                    listObject.splice(j, 1);
+                    listObject.push(new Rectangle(pointakhir, tempP3.point3, tempP3.color));
+                    break;
+                }
+                else if (closePointsRect[0][1] == "point3"){
+                    let tempP1 = new Rectangle(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                    listObject.splice(j, 1);
+                    listObject.push(new Rectangle(tempP1.point1, pointakhir, tempP1.color));
+                    break;
+                }
+            } 
+        };
+        
+        closePointsRect = [];
+        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
+        render();
+    })
+
     const polyFunctions = new PolygonFunctions(canvas);
 
     // polygon
@@ -254,6 +311,7 @@ function main() {
         polyFunctions.deactivate();
         lineFunctions.deactivateMover();
         squareFunctions.deactivateMover();
+        rectFunctions.deactivateMover();
         isDrawing = false;
     }
 
@@ -265,6 +323,7 @@ function main() {
         deactivateAll();
         lineFunctions.activateMover();
         squareFunctions.activateMover();
+        rectFunctions.activateMover();
         console.log("tesssssss");
     });
 

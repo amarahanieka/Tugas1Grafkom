@@ -7,12 +7,17 @@ class RectangleFunctions {
             startPointCreated: [],
             endPointCreated: [],
             rectAborted: [],
+            pointAwalChosen: [],
+            pointAkhirChosen: [],
         };
 
         this.startpoint = null;
         this.endpoint = null;
+        this.pointAwal = null;
+        this.pointAkhir = null;
 
         this.isDrawing = false;
+        this.isMoving = false;
 
         this.clickEvent = (e) => {
             if (this.isDrawing) {
@@ -44,6 +49,32 @@ class RectangleFunctions {
             
             
         };
+
+        this.chooseNewPoint = (e) => {
+            if(e.shiftKey){
+                this.pointAwal = this.setPoint(e);
+                this.sendEvent("pointAwalChosen", this.pointAwal);
+                this.isMoving = true;
+            }
+        }
+
+        this.chooseTargetPoint = (e) => {
+            if(e.shiftKey && this.isMoving==true){
+                console.log("lagi pindah")
+                // this.drawLine(canvas, this.x, this.y, e.offsetX, e.offsetY);
+            }
+        }
+
+        this.endTargetPoint = (e) => {
+            if(e.shiftKey && this.isMoving==true){
+                // this.drawLine(canvas, this.x, this.y, e.offsetX, e.offsetY);
+                // console.log("lagi pindah")
+                console.log("stop")
+                this.pointAkhir = this.setPoint(e);
+                this.sendEvent("pointAkhirChosen", this.pointAkhir);
+                this.isMoving = false;
+            }
+        }
     };
 
     sendEvent(event, data) {
@@ -96,4 +127,19 @@ class RectangleFunctions {
     givePoint(){
         return [this.startpoint, this.endpoint];
     };
+
+    activateMover(){
+        this.canvas.addEventListener("mousedown", this.chooseNewPoint);
+        this.canvas.addEventListener("mousemove", this.chooseTargetPoint);
+        this.canvas.addEventListener("mouseup", this.endTargetPoint);
+    }
+    
+    deactivateMover(){
+        this.startpoint = null;
+        this.endpoint = null;
+        this.pointAwal = null;
+        this.canvas.removeEventListener("mousedown", this.chooseNewPoint);
+        this.canvas.removeEventListener("mousemove", this.chooseTargetPoint);
+        this.canvas.removeEventListener("mouseup", this.endTargetPoint);
+    }
 }
