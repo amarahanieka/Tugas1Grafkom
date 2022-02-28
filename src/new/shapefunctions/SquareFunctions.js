@@ -1,4 +1,4 @@
-class SquareFunctions {
+    class SquareFunctions {
     constructor(canvas) {
         this.canvas = canvas;
 
@@ -9,16 +9,19 @@ class SquareFunctions {
             squareAborted: [],
             pointAwalChosen: [],
             pointAkhirChosen: [],
+            choosethis: [],
         };
 
         this.startpoint = null;
         this.endpoint = null;
         this.pointAwal = null;
         this.pointAkhir = null;
-
+        this.mouseColor = null;
 
         this.isDrawing = false;
         this.isMoving = false;
+
+        this.changeColor = false;
 
         this.clickEvent = (e) => {
             if (this.isDrawing) {
@@ -72,6 +75,13 @@ class SquareFunctions {
                 this.pointAkhir = this.setPoint(e);
                 this.sendEvent("pointAkhirChosen", this.pointAkhir);
                 this.isMoving = false;
+            }
+        }
+
+        this.chooseObject = (e) => {
+            if(e.altKey){
+                this.mouseColor = this.setPoint(e);
+                this.sendEvent("choosethis", this.mouseColor);
             }
         }
     };
@@ -141,5 +151,13 @@ class SquareFunctions {
         this.canvas.removeEventListener("mousedown", this.chooseNewPoint);
         this.canvas.removeEventListener("mousemove", this.chooseTargetPoint);
         this.canvas.removeEventListener("mouseup", this.endTargetPoint);
+    }
+
+    activateColorChanger() {
+        this.canvas.addEventListener("click", this.chooseObject);
+    }
+
+    deactivateColorChanger() {
+        this.canvas.removeEventListener("click", this.chooseObject);
     }
 }

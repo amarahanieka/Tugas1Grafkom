@@ -233,6 +233,47 @@ function main() {
 
     })
 
+    squareFunctions.listen("choosethis", (tempatdiklik) => {
+
+        for (let j = 0; j < listObject.length; j++) {
+            if (listObject[j].constructor.name == "Square") {
+                if(isitinsideSquare(tempatdiklik, listObject[j])) {
+                    console.log('DIDALEM SQUARE');
+                    let tempcolsq = new Square(listObject[j].point1, listObject[j].point3, document.getElementById("colorValue").value)
+                    listObject.splice(j, 1);
+                    listObject.push(tempcolsq);
+
+                }
+                else {
+                    console.log('BUKAN DI SQUARE INI');
+
+                }
+            }
+
+        };
+
+        for (let j = 0; j < listObject.length; j++) {
+            if (listObject[j].constructor.name == "Rectangle") {
+                if(isitinsideSquare(tempatdiklik, listObject[j])) {
+                    console.log('DIDALEM RECTANGLE');
+                    let tempcolsq = new Rectangle(listObject[j].point1, listObject[j].point3, document.getElementById("colorValue").value)
+                    listObject.splice(j, 1);
+                    listObject.push(tempcolsq);
+
+                }
+                else {
+                    console.log('BUKAN DI RECTANGLE INI');
+
+                }
+            }
+
+        };
+
+        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
+        render();
+
+    })
+
     //rect
     const rectFunctions = new RectangleFunctions(canvas);
     
@@ -352,6 +393,7 @@ function main() {
         lineFunctions.deactivateMover();
         squareFunctions.deactivateMover();
         rectFunctions.deactivateMover();
+        squareFunctions.deactivateColorChanger();
         isDrawing = false;
     }
 
@@ -364,6 +406,7 @@ function main() {
         lineFunctions.activateMover();
         squareFunctions.activateMover();
         rectFunctions.activateMover();
+        squareFunctions.activateColorChanger();
         console.log("tesssssss");
     });
 
@@ -764,6 +807,32 @@ function main() {
 
     function distance(point1, point2) {
         return (Math.sqrt(Math.pow(Math.abs(point2[0] - point1[0]), 2) + Math.pow(Math.abs(point2[1] - point1[1]), 2)));
+    }
+
+    function isitinsideSquare(point, square){
+        var polygon = [square.point1, square.point2, square.point3, square.point4];
+        var n=4,
+        is_in=false,
+        x=point[0],
+        y=point[1],
+        x1,x2,y1,y2;
+
+        for(var i=0; i < n-1; ++i){
+            //a
+            x1=polygon[i][0];
+            y1=polygon[i][1];
+
+            //b
+            x2=polygon[i+1][0];
+            y2=polygon[i+1][1];
+            
+        
+            if(y < y1 != y < y2 && x < (x2-x1) * (y-y1) / (y2-y1) + x1){
+                is_in=!is_in;
+            }
+        }
+        
+    return is_in;
     }
         
 }

@@ -36,6 +36,8 @@ class Square {
         return new Square(p1, p3, color);
     }
 
+    
+
     // render(context, vb, cb){
     //     context.bindBuffer(context.ARRAY_BUFFER, vb);
     //     var p1 = this.point1.toString()
