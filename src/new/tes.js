@@ -161,26 +161,26 @@ function main() {
         for (let j = 0; j < listObject.length; j++) {
             if (listObject[j].constructor.name == "Square") {
                 var cekpoint1 = distance(pointawal, listObject[j].point1);
-                // var cekpoint2 = distance(pointawal, listObject[j].point2);
+                var cekpoint2 = distance(pointawal, listObject[j].point2);
                 var cekpoint3 = distance(pointawal, listObject[j].point3);
-                // var cekpoint4 = distance(pointawal, listObject[j].point4);
+                var cekpoint4 = distance(pointawal, listObject[j].point4);
     
                 if (cekpoint1 < batas && cekpoint1 != NaN){
                     closePointsSquare.push([j, "point1"]);
                     break;
                 }
-                // else  if (cekpoint2 < batas && cekpoint2 != NaN){
-                //     closePoints.push([j, "point2"]);
-                //     break;
-                // }
+                else  if (cekpoint2 < batas && cekpoint2 != NaN){
+                    closePointsSquare.push([j, "point2"]);
+                    break;
+                }
                 else  if (cekpoint3 < batas && cekpoint3 != NaN){
                     closePointsSquare.push([j, "point3"]);
                     break;
                 }
-                // else  if (cekpoint4 < batas && cekpoint4 != NaN){
-                //     closePoints.push([j, "point4"]);
-                //     break;
-                // }
+                else  if (cekpoint4 < batas && cekpoint4 != NaN){
+                    closePointsSquare.push([j, "point4"]);
+                    break;
+                }
             }
 
         };
@@ -204,20 +204,20 @@ function main() {
                     listObject.push(new Square(tempP1, pointakhir, tempcolorP1));
                     break;
                 }
-                // else if (closePointsRect[0][1] == "point2"){
-                //     let tempP2 = new Square(listObject[j].point1, listObject[j].point3, listObject[j].color)
-                //     listObject.splice(j, 1);
-                //     tempP2 = tempP2.changeP2(pointakhir, tempP2.point1, tempP2.point3, tempP2.color);
-                //     listObject.push(tempP2);
-                //     break;
-                // }
-                // else if (closePointsRect[0][1] == "point4"){
-                //     let tempP4 = new Square(listObject[j].point1, listObject[j].point3, listObject[j].color)
-                //     listObject.splice(j, 1);
-                //     tempP4 = tempP4.changeP4(pointakhir, tempP4.point1, tempP4.point3, tempP4.color);
-                //     listObject.push(tempP4);
-                //     break;
-                // }
+                else if (closePointsSquare[0][1] == "point2"){
+                    let tempP2 = new Square(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                    listObject.splice(j, 1);
+                    tempP2 = tempP2.changeP2(pointakhir, tempP2.point1, tempP2.point3, tempP2.color);
+                    listObject.push(tempP2);
+                    break;
+                }
+                else if (closePointsSquare[0][1] == "point4"){
+                    let tempP4 = new Square(listObject[j].point1, listObject[j].point3, listObject[j].color)
+                    listObject.splice(j, 1);
+                    tempP4 = tempP4.changeP4(pointakhir, tempP4.point1, tempP4.point3, tempP4.color);
+                    listObject.push(tempP4);
+                    break;
+                }
 
             } 
         };
@@ -225,6 +225,12 @@ function main() {
         closePointsSquare = [];
         gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
         render();
+
+        temp1 = null;
+        temp2 = null;
+        temp3 = null;
+        temp4 = null;
+
     })
 
     //rect
@@ -311,6 +317,11 @@ function main() {
         closePointsRect = [];
         gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
         render();
+
+        temp1 = null;
+        temp2 = null;
+        temp3 = null;
+        temp4 = null;
     })
 
     const polyFunctions = new PolygonFunctions(canvas);

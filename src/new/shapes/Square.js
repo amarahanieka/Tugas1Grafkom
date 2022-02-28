@@ -15,20 +15,24 @@ class Square {
             this.point3 = [point1[0]+mirrorX*distx,point1[1]+mirrorY*distx*(1/canvasXYratio),0] 
         }
 
-        this.point2 = [point1[0],this.point3[1],0]
-        this.point4 = [this.point3[0],point1[1],0]
+        this.point2 = [this.point1[0],this.point3[1],0]
+        this.point4 = [this.point3[0],this.point1[1],0]
         this.color = color;
     }
 
     changeP4(p4, p1, p3, color){
         p1[1] = p4[1];
         p3[0] = p4[0];
+        // p2[0] = p1[0];
+        // p2[1] = p3[1];
         return new Square(p1, p3, color);
     }
 
     changeP2(p2, p1, p3, color){
         p1[0] = p2[0];
         p3[1] = p2[1];
+        // p4[0] = p3[0];
+        // p4[1] = p1[1];
         return new Square(p1, p3, color);
     }
 
