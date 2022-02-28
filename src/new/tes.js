@@ -71,6 +71,9 @@ function main() {
     var squares = [];
     var rectangles = [];
     var polygons = [];
+    var closePoints = [];
+    var pointAwal = null;
+    var chosenLine = [];
 
     // shapessss
     const lineFunctions = new LineFunctions(canvas);
@@ -91,6 +94,92 @@ function main() {
     lineFunctions.listen("endPointCreated", () => {
         render();
         console.log("endPointCreated");
+    })
+
+    lineFunctions.listen("pointAwalChosen", (pointawal) => {
+        console.log("pointawal");
+        console.log(pointawal);
+        pointAwal = pointawal;
+        var batas = 0.2;
+        var i = 0;
+        // listObject.forEach(element => {
+        //     var cekpoint1 = distance(pointawal, element.point1);
+        //     var cekpoint2 = distance(pointawal, element.point2);
+
+        //     if (cekpoint1 < batas && cekpoint1 != NaN){
+        //         closePoints.push([i, "point1"])
+        //     }
+        //     else  if (cekpoint2 < batas && cekpoint2 != NaN){
+        //         closePoints.push([i, "point2"])
+        //     }
+        //     i++;
+        // });
+
+        for (let j = 0; j < listObject.length; j++) {
+            var cekpoint1 = distance(pointawal, listObject[j].point1);
+            var cekpoint2 = distance(pointawal, listObject[j].point2);
+
+            if (cekpoint1 < batas && cekpoint1 != NaN){
+                closePoints.push([i, "point1"]);
+                break;
+            }
+            else  if (cekpoint2 < batas && cekpoint2 != NaN){
+                closePoints.push([i, "point2"]);
+                break;
+            }
+            else{
+                i++;
+            }
+        };
+
+        console.log("closepoints");
+        console.log(closePoints)
+        
+        // listObject.forEach(element => {
+        //     if (ii == closePoints[0][0]) {
+        //         chosenLine.push(element);
+        //     }
+        //     else {
+        //         ii++;
+        //     }
+        // });
+    })
+
+    lineFunctions.listen("pointAkhirChosen", (pointakhir) => {
+        var ii = 0;
+        // listObject.forEach(element => {
+        //     if (ii == closePoints[0][0]) {
+        //         if (closePoints[0][1] == "point1"){
+        //             element.point1 = pointakhir;
+        //         }
+        //         else if (closePoints[0][1] == "point2"){
+        //             element.point2 = pointakhir;
+        //         }
+        //     } 
+        //     else {
+        //         ii++;
+        //     }
+        // });
+
+        for (let j = 0; j < listObject.length; j++) {
+            if (ii == closePoints[0][0]) {
+                if (closePoints[0][1] == "point1"){
+                    listObject[j].point1 = pointakhir;
+                    break;
+                }
+                else if (closePoints[0][1] == "point2"){
+                    listObject[j].point2 = pointakhir;
+                    break;
+                }
+            } 
+            else {
+                ii++;
+            }
+        };
+        
+        closePoints = [];
+        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
+        render();
     })
 
     //square
@@ -160,6 +249,7 @@ function main() {
         squareFunctions.deactivate();
         rectFunctions.deactivate();
         polyFunctions.deactivate();
+        lineFunctions.deactivateMover();
         isDrawing = false;
     }
 
@@ -169,6 +259,7 @@ function main() {
         this.classList.add("selectedtool");
         isDrawing = false;
         deactivateAll();
+        lineFunctions.activateMover();
         console.log("tesssssss");
     });
 
@@ -489,10 +580,7 @@ function main() {
     }
 
     function renderSquare(a, c) {
-        console.log("render PERKOTAKAN")
-        
-        console.log("UNflat");
-        console.log(a);
+        // console.log(a);
 
         c = c.flat(2);
         counter = 0
@@ -568,6 +656,10 @@ function main() {
 
 
         }
+    }
+
+    function distance(point1, point2) {
+        return (Math.sqrt(Math.pow(Math.abs(point2[0] - point1[0]), 2) + Math.pow(Math.abs(point2[1] - point1[1]), 2)));
     }
         
 }
