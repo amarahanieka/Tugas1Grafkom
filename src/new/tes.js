@@ -464,7 +464,7 @@ function main() {
         console.log(a);
 
         c = c.flat(2);
-        
+        counter = 0
         a.forEach(element => {
             console.log("masuk foreach")
             var jumlahSq = element.length;
@@ -479,10 +479,18 @@ function main() {
 
             gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
             console.log("sq/rectcolor: ",c)
+
+            if(counter>0)
+            {
+                c.splice(0, 24);
+            }
+            
+            counter = counter + 1
+
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(c), gl.STATIC_DRAW);
             gl.bindBuffer(gl.ARRAY_BUFFER, null)
 
-            gl.drawArrays(gl.TRIANGLE_FAN, 0, jumlahSq);
+            gl.drawArrays(gl.TRIANGLE_FAN, 0, 8);
             // gl.drawArrays(gl.POINTS, 0, 8);
         });
         
@@ -494,6 +502,7 @@ function main() {
             const initialPoint = points[0]
             for (let j = 1; j < points.length-1; j++) {
                 const point1 = points[j];
+                
                 for (let k = 1; k < points.length-1; k++) {
                     const point2 = points[k+1];
                     
@@ -507,10 +516,16 @@ function main() {
                     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
                     polycolor = polycolor.flat(2);
                     console.log("polycolor:",polycolor)
+
+
                     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(polycolor), gl.STATIC_DRAW);
                     gl.bindBuffer(gl.ARRAY_BUFFER, null)
                     gl.drawArrays(gl.TRIANGLES, 0, 3);
                 }
+
+                console.log("POINTS on polygon ",points.length)
+                polycolor.splice(0, points.length*3);
+
             }
         }
     }
