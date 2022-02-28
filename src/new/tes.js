@@ -72,8 +72,8 @@ function main() {
     var rectangles = [];
     var polygons = [];
     var closePoints = [];
+    var closePointsSquare = [];
     var pointAwal = null;
-    var chosenLine = [];
 
     // shapessss
     const lineFunctions = new LineFunctions(canvas);
@@ -93,10 +93,8 @@ function main() {
     })
 
     lineFunctions.listen("pointAwalChosen", (pointawal) => {
-        console.log("pointawal");
-        console.log(pointawal);
         pointAwal = pointawal;
-        var batas = 0.2;
+        var batas = 0.05;
         // var i = 0;
 
         for (let j = 0; j < listObject.length; j++) {
@@ -116,16 +114,12 @@ function main() {
 
         };
 
-        console.log("closepoints");
-        console.log(closePoints)
-        
     })
 
     lineFunctions.listen("pointAkhirChosen", (pointakhir) => {
-        var ii = 0;
 
         for (let j = 0; j < listObject.length; j++) {
-            if (ii == closePoints[0][0]) {
+            if (j == closePoints[0][0]) {
                 if (closePoints[0][1] == "point1"){
                     listObject[j].point1 = pointakhir;
                     break;
@@ -135,9 +129,6 @@ function main() {
                     break;
                 }
             } 
-            else {
-                ii++;
-            }
         };
         
         closePoints = [];
@@ -156,14 +147,68 @@ function main() {
         // isDrawing = false;
     })
 
-    // squareFunctions.listen("squareAborted", () => {
-    //     render();
-    //     console.log("aborted");
-    // })
-
     squareFunctions.listen("endPointCreated", () => {
         render();
         console.log("endPointCreated");
+    })
+
+    squareFunctions.listen("pointAwalChosen", (pointawal) => {
+        pointAwal = pointawal;
+        var batas = 0.05;
+        // var i = 0;
+
+        for (let j = 0; j < listObject.length; j++) {
+            if (listObject[j].constructor.name == "Square") {
+                var cekpoint1 = distance(pointawal, listObject[j].point1);
+                // var cekpoint2 = distance(pointawal, listObject[j].point2);
+                var cekpoint3 = distance(pointawal, listObject[j].point3);
+                // var cekpoint4 = distance(pointawal, listObject[j].point4);
+    
+                if (cekpoint1 < batas && cekpoint1 != NaN){
+                    closePointsSquare.push([j, "point1"]);
+                    break;
+                }
+                // else  if (cekpoint2 < batas && cekpoint2 != NaN){
+                //     closePoints.push([j, "point2"]);
+                //     break;
+                // }
+                else  if (cekpoint3 < batas && cekpoint3 != NaN){
+                    closePointsSquare.push([j, "point3"]);
+                    break;
+                }
+                // else  if (cekpoint4 < batas && cekpoint4 != NaN){
+                //     closePoints.push([j, "point4"]);
+                //     break;
+                // }
+            }
+
+        };
+        
+    })
+
+    squareFunctions.listen("pointAkhirChosen", (pointakhir) => {
+        for (let j = 0; j < listObject.length; j++) {
+            if (j == closePointsSquare[0][0]) {
+                if (closePointsSquare[0][1] == "point1"){
+                    var tempP3 = listObject[j].point3;
+                    var tempcolorP3 = listObject[j].color;
+                    listObject.splice(j, 1);
+                    listObject.push(new Square(pointakhir, tempP3, tempcolorP3));
+                    break;
+                }
+                else if (closePointsSquare[0][1] == "point3"){
+                    var tempP1 = listObject[j].point1;
+                    var tempcolorP1 = listObject[j].color;
+                    listObject.splice(j, 1);
+                    listObject.push(new Square(tempP1, pointakhir, tempcolorP1));
+                    break;
+                }
+            } 
+        };
+        
+        closePointsSquare = [];
+        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
+        render();
     })
 
     //rect
@@ -176,11 +221,6 @@ function main() {
         render();
         // isDrawing = false;
     })
-
-    // rectFunctions.listen("rectAborted", () => {
-    //     render();
-    //     console.log("aborted");
-    // })
 
     rectFunctions.listen("endPointCreated", () => {
         render();
@@ -213,6 +253,7 @@ function main() {
         rectFunctions.deactivate();
         polyFunctions.deactivate();
         lineFunctions.deactivateMover();
+        squareFunctions.deactivateMover();
         isDrawing = false;
     }
 
@@ -223,6 +264,7 @@ function main() {
         isDrawing = false;
         deactivateAll();
         lineFunctions.activateMover();
+        squareFunctions.activateMover();
         console.log("tesssssss");
     });
 

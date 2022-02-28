@@ -30,7 +30,7 @@ class RectangleFunctions {
             } else {
                 this.isDrawing = true;
                 this.startpoint = this.setPoint(e);
-                this._fireEvent = ("startPointCreated", this.startpoint);
+                this.sendEvent("startPointCreated", this.startpoint);
             }
         };
 
@@ -38,7 +38,7 @@ class RectangleFunctions {
             if (this.isDrawing){
                 this.endpoint = this.setPoint(e);
                 // console.log("masuk ke next click event")
-                this._fireEvent = ("endPointCreated", this.endpoint);
+                this.sendEvent("endPointCreated", this.endpoint);
                 
             }
             

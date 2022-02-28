@@ -18,8 +18,6 @@ class LineFunctions {
 
         this.isDrawing = false;
         this.isMoving = false;
-        this.x = 0;
-        this.y = 0;
 
         this.clickEvent = (e) => {
             if (this.isDrawing) {
@@ -56,14 +54,14 @@ class LineFunctions {
                 this.sendEvent("pointAwalChosen", this.pointAwal);
                 this.isMoving = true;
             }
-        }
+        };
 
         this.chooseTargetPoint = (e) => {
             if(e.shiftKey && this.isMoving==true){
                 console.log("lagi pindah")
                 // this.drawLine(canvas, this.x, this.y, e.offsetX, e.offsetY);
             }
-        }
+        };
 
         this.endTargetPoint = (e) => {
             if(e.shiftKey && this.isMoving==true){
@@ -74,7 +72,7 @@ class LineFunctions {
                 this.sendEvent("pointAkhirChosen", this.pointAkhir);
                 this.isMoving = false;
             }
-        }
+        };
 
         
     };
@@ -124,16 +122,6 @@ class LineFunctions {
         var pts = [x, y, 0];
         return pts;
     };
-
-    drawLine(context, x1, y1, x2, y2) {
-        context.beginPath();
-        context.strokeStyle = 'black';
-        context.lineWidth = 1;
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.stroke();
-        context.closePath();
-      }
 
     givePoint(){
         return [this.startpoint, this.endpoint];
