@@ -150,9 +150,8 @@ class LineFunctions {
         this.startpoint = null;
         this.endpoint = null;
         this.pointAwal = null;
-        this.canvas.removeEventListener(
-            "click",
-            this.chooseNewPoint
-        );
+        this.canvas.removeEventListener("mousedown", this.chooseNewPoint);
+        this.canvas.removeEventListener("mousemove", this.chooseTargetPoint);
+        this.canvas.removeEventListener("mouseup", this.endTargetPoint);
     }
 }
