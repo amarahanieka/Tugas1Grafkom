@@ -22,6 +22,7 @@ var isPointVisible = false;
 function main() {
 
     var canvas = document.getElementById("gl-canvas");
+    canvas.onselectstart = function () { return false; }
     gl = canvas.getContext("webgl", {preserveDrawingBuffer: true});
     // gl = canvas.getContext("webgl", { preserveDrawingBuffer: true });
 

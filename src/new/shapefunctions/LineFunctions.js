@@ -19,10 +19,13 @@ class LineFunctions {
                 if (this.endpoint == null) {
                     this.sendEvent("lineAborted", null);
                 }
-                this.sendEvent(
-                    "lineCreated",
-                    new Line(this.startpoint, this.endpoint, document.getElementById("colorValue").value)
-                );
+                if(this.endpoint)
+                {
+                    this.sendEvent(
+                        "lineCreated",
+                        new Line(this.startpoint, this.endpoint, document.getElementById("colorValue").value)
+                    );
+                }
 
                 this.isDrawing = false;
                 this.startpoint = null;
