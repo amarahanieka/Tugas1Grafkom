@@ -17,7 +17,10 @@ const fsSource = `
     }
 `;
 
+var isPointVisible = false;
+
 function main() {
+
     var canvas = document.getElementById("gl-canvas");
     gl = canvas.getContext("webgl", {preserveDrawingBuffer: true});
     // gl = canvas.getContext("webgl", { preserveDrawingBuffer: true });
@@ -342,7 +345,7 @@ function main() {
     // Misc. Menu buttons
     function showHelp(){
         document.getElementById("whichShape").innerHTML = "<img src='img/icon_help.png'>Instructions / Help";
-        document.getElementById("toolDetail").innerHTML = "<p>How to use: <ol> <li>Click one of the tools from the menu on the right side of the screen. Detailed instructions on how to use the tool will show up on the bottom of the screen.</li> <li>Use the tool by clicking inside the canvas area.</li> <li>The [Show help] button can be used to show this instructions on the screen again.</li> </ol> </p> <p>List of tools: <ul> <li><b>Control:</b> Use to pick a shape and edit its colors/position.</li> <li><b>Line:</b> Creates a straight line.</li> <li><b>Square:</b> Creates a square.</li> <li><b>Rectangle:</b> Creates a rectangle.</li> <li><b>Polygon:</b> Creates a polygon.</li> <li><b>Undo Draw:</b> Deletes last created shape.</li> <li><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li> <li><b>Load file:</b> Loads canvas from a saved file.</li> <li><b>Save current file:</b> Saves current canvas into a file.</li> <li><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li> <li><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li> <li><b>Show help:</b> Shows this help menu.</li> </ul> </p>";
+        document.getElementById("toolDetail").innerHTML = "<p>How to use: <ol> <li>Click one of the tools from the menu on the right side of the screen. Detailed instructions on how to use the tool will show up on the bottom of the screen.</li> <li>Use the tool by clicking inside the canvas area.</li> <li>The [Show help] button can be used to show this instructions on the screen again.</li> </ol> </p> <p>List of tools: <ul> <li><img src='img/icon_control.png'><b>Control:</b> Use to pick a shape and edit its colors/position.</li> <li><img src='img/icon_line.png'><b>Line:</b> Creates a straight line.</li> <li><img src='img/icon_square.png'><b>Square:</b> Creates a square.</li> <li><img src='img/icon_rect.png'><b>Rectangle:</b> Creates a rectangle.</li> <li><img src='img/icon_polygon.png'><b>Polygon:</b> Creates a polygon.</li> <li><img src='img/icon_undo.png'><b>Undo Draw:</b> Deletes last created shape.</li> <li><img src='img/icon_clear.png'><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li> <li><img src='img/icon_load.png'><b>Load file:</b> Loads canvas from a saved file.</li> <li><img src='img/icon_save.png'><b>Save current file:</b> Saves current canvas into a file.</li> <li><img src='img/icon_export.png'><b>Export:</b> Saves current canvas into an image.</li> <li><img src='img/icon_fill.png'><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li> <li><img src='img/icon_stroke.png'><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li> <li><img src='img/icon_help.png'><b>Show help:</b> Shows this help menu.</li> <li><img src='img/icon_point.png'><b>Toggle points:</b> Shows/hides all control points.</li> </ul> </p>";
     }
 
     function controlHelp(){
@@ -372,6 +375,13 @@ function main() {
 
     document.getElementById("HelpButton").addEventListener("click", function() {
         showHelp();
+    });
+
+    document.getElementById("PointButton").addEventListener("click", function() {
+        isPointVisible = !isPointVisible;
+        console.log("IS POINT VIS: ",isPointVisible)
+        gl.clear(gl.COLOR_BUFFER_BIT||gl.DEPTH_BUFFER_BIT||gl.STENCIL_BUFFER_BIT)
+        render();
     });
 
 
@@ -460,7 +470,11 @@ function main() {
         // gl.drawArrays(gl.LINES, 0, 2);
        
         gl.drawArrays(gl.LINES, 0, jumlahLine);
-        gl.drawArrays(gl.POINTS, 0, jumlahLine);
+        if(isPointVisible)
+        {
+            gl.drawArrays(gl.POINTS, 0, jumlahLine);
+        }
+        
     };
 
     function hexToRGBA(hex){

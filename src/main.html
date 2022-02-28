@@ -29,19 +29,20 @@
                     </p>
                     <p>List of tools:
                         <ul>
-                            <li><b>Control:</b> Use to pick a shape and edit its colors/position.</li>
-                            <li><b>Line:</b> Creates a straight line.</li>
-                            <li><b>Square:</b> Creates a square.</li>
-                            <li><b>Rectangle:</b> Creates a rectangle.</li>
-                            <li><b>Polygon:</b> Creates a polygon.</li>
-                            <li><b>Undo Draw:</b> Deletes last created shape.</li>
-                            <li><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li>
-                            <li><b>Load file:</b> Loads canvas from a saved file.</li>
-                            <li><b>Save current file:</b> Saves current canvas into a file.</li>
-                            <li><b>Export:</b> Saves current canvas into an image.</li>
-                            <li><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li>
-                            <li><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li>
-                            <li><b>Show help:</b> Shows this help menu.</li>
+                            <li><img src='img/icon_control.png'><b>Control:</b> Use to pick a shape and edit its colors/position.</li>
+                            <li><img src='img/icon_line.png'><b>Line:</b> Creates a straight line.</li>
+                            <li><img src='img/icon_square.png'><b>Square:</b> Creates a square.</li>
+                            <li><img src='img/icon_rect.png'><b>Rectangle:</b> Creates a rectangle.</li>
+                            <li><img src='img/icon_polygon.png'><b>Polygon:</b> Creates a polygon.</li>
+                            <li><img src='img/icon_undo.png'><b>Undo Draw:</b> Deletes last created shape.</li>
+                            <li><img src='img/icon_clear.png'><b>Clear:</b> Cleares the screen (WARNING: action cannot be undone).</li>
+                            <li><img src='img/icon_load.png'><b>Load file:</b> Loads canvas from a saved file.</li>
+                            <li><img src='img/icon_save.png'><b>Save current file:</b> Saves current canvas into a file.</li>
+                            <li><img src='img/icon_export.png'><b>Export:</b> Saves current canvas into an image.</li>
+                            <li><img src='img/icon_fill.png'><b>Fill color:</b> Changes the fill color of a shape (square, rectangle, polygon) according to color input.</li>
+                            <li><img src='img/icon_stroke.png'><b>Stroke color:</b> Changes the stroke color of a shape (applicable to all shapes) according to color input.</li>
+                            <li><img src='img/icon_help.png'><b>Show help:</b> Shows this help menu.</li>
+                            <li><img src='img/icon_point.png'><b>Toggle points:</b> Shows/hides all control points.</li>
                         </ul>
                     </p>
                 </div>
@@ -70,12 +71,13 @@
                 <div style="padding:10px; background-color:#bbb;">
                     <div>Color Menu</div>
                     <input id="colorValue" type="color" />
-                    <button id="FillButton">Fill Color</button>
-                    <button id="StrokeButton">Stroke Color</button>
+                    <button id="FillButton"><img src='img/icon_fill.png'>Fill Color</button>
+                    <button id="StrokeButton"><img src='img/icon_stroke.png'>Stroke Color</button>
                 </div> <br>
                 <div style="padding:10px; background-color:#bbb;">
                     <div>Misc.</div>
-                    <button id="HelpButton"><img src='img/icon_help.png'><br>Show help</button>
+                    <button id="HelpButton"><img src='img/icon_help.png'><br>Show Help</button>
+                    <button id="PointButton"><img src='img/icon_point.png'><br>Toggle Points</button>
                 </div>    
             </div>
         </div>
