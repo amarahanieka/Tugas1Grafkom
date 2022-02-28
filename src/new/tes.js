@@ -86,10 +86,6 @@ function main() {
         // isDrawing = false;
     })
 
-    // lineFunctions.listen("lineAborted", () => {
-    //     render();
-    //     console.log("aborted");
-    // })
 
     lineFunctions.listen("endPointCreated", () => {
         render();
@@ -101,65 +97,32 @@ function main() {
         console.log(pointawal);
         pointAwal = pointawal;
         var batas = 0.2;
-        var i = 0;
-        // listObject.forEach(element => {
-        //     var cekpoint1 = distance(pointawal, element.point1);
-        //     var cekpoint2 = distance(pointawal, element.point2);
-
-        //     if (cekpoint1 < batas && cekpoint1 != NaN){
-        //         closePoints.push([i, "point1"])
-        //     }
-        //     else  if (cekpoint2 < batas && cekpoint2 != NaN){
-        //         closePoints.push([i, "point2"])
-        //     }
-        //     i++;
-        // });
+        // var i = 0;
 
         for (let j = 0; j < listObject.length; j++) {
-            var cekpoint1 = distance(pointawal, listObject[j].point1);
-            var cekpoint2 = distance(pointawal, listObject[j].point2);
+            if (listObject[j].constructor.name == "Line") {
+                var cekpoint1 = distance(pointawal, listObject[j].point1);
+                var cekpoint2 = distance(pointawal, listObject[j].point2);
+    
+                if (cekpoint1 < batas && cekpoint1 != NaN){
+                    closePoints.push([j, "point1"]);
+                    break;
+                }
+                else  if (cekpoint2 < batas && cekpoint2 != NaN){
+                    closePoints.push([j, "point2"]);
+                    break;
+                }
+            }
 
-            if (cekpoint1 < batas && cekpoint1 != NaN){
-                closePoints.push([i, "point1"]);
-                break;
-            }
-            else  if (cekpoint2 < batas && cekpoint2 != NaN){
-                closePoints.push([i, "point2"]);
-                break;
-            }
-            else{
-                i++;
-            }
         };
 
         console.log("closepoints");
         console.log(closePoints)
         
-        // listObject.forEach(element => {
-        //     if (ii == closePoints[0][0]) {
-        //         chosenLine.push(element);
-        //     }
-        //     else {
-        //         ii++;
-        //     }
-        // });
     })
 
     lineFunctions.listen("pointAkhirChosen", (pointakhir) => {
         var ii = 0;
-        // listObject.forEach(element => {
-        //     if (ii == closePoints[0][0]) {
-        //         if (closePoints[0][1] == "point1"){
-        //             element.point1 = pointakhir;
-        //         }
-        //         else if (closePoints[0][1] == "point2"){
-        //             element.point2 = pointakhir;
-        //         }
-        //     } 
-        //     else {
-        //         ii++;
-        //     }
-        // });
 
         for (let j = 0; j < listObject.length; j++) {
             if (ii == closePoints[0][0]) {
