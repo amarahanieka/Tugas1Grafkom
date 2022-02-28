@@ -629,6 +629,35 @@ function main() {
         
     });
 
+    canvas.addEventListener("click", (e) => {
+        if(e.altKey) {
+            var x = e.clientX;
+            var y = e.clientY;
+            x = (x - canvas.width / 2) / (canvas.width / 2);
+            y = (canvas.height / 2 - y) / (canvas.height / 2);
+            var clickedpoint = [x, y, 0];
+
+            for (let j = 0; j < listObject.length; j++) {
+                if (listObject[j].constructor.name == "Square" || listObject[j].constructor.name == "Rectangle") {
+                    if(isitinsideSquare(clickedpoint, listObject[j])) {
+                        document.getElementById("currObj").innerHTML = "You clicked object with ID: " + j;
+                    }
+                }
+                else if (listObject[j].constructor.name == "Polygon") {
+                    if(isitinsidePolygon(clickedpoint, listObject[j])) {
+                        document.getElementById("currObj").innerHTML = "You clicked object with ID: " + j;
+                    }
+                }
+                else if (listObject[j].constructor.name == "Line") {
+                    if(isitbetweenLine(clickedpoint, listObject[j])) {
+                        document.getElementById("currObj").innerHTML = "You clicked object with ID: " + j;
+                    }
+                }
+            }
+        }
+    });
+
+
     document.getElementById("PointButton").addEventListener("click", function() {
         isPointVisible = !isPointVisible;
         console.log("IS POINT VIS: ",isPointVisible)
@@ -820,6 +849,86 @@ function main() {
 
     function distance(point1, point2) {
         return (Math.sqrt(Math.pow(Math.abs(point2[0] - point1[0]), 2) + Math.pow(Math.abs(point2[1] - point1[1]), 2)));
+    }
+    
+    function isitinsideSquare(point, square){
+        var polygon = [square.point1, square.point2, square.point3, square.point4];
+        var n=4,
+        is_in=false,
+        x=point[0],
+        y=point[1],
+        x1,x2,y1,y2;
+
+        for(var i=0; i < n-1; ++i){
+            //a
+            x1=polygon[i][0];
+            y1=polygon[i][1];
+
+            //b
+            x2=polygon[i+1][0];
+            y2=polygon[i+1][1];
+            
+        
+            if(y < y1 != y < y2 && x < (x2-x1) * (y-y1) / (y2-y1) + x1){
+                is_in=!is_in;
+            }
+        }
+        
+    return is_in;
+    }
+
+    function isitinsidePolygon(point, pol){
+        var polygon = [pol.points];
+        console.log('polygon');
+        console.log(polygon);
+        var n=pol.points.length,
+        is_in=false,
+        x=point[0],
+        y=point[1],
+        x1,x2,y1,y2;
+
+        for(var i=0; i < n-1; ++i){
+            //a
+            x1=polygon[0][i][0];
+            y1=polygon[0][i][1];
+
+            //b
+            x2=polygon[0][i+1][0];
+            y2=polygon[0][i+1][1];
+            
+        
+            if(y < y1 != y < y2 && x < (x2-x1) * (y-y1) / (y2-y1) + x1){
+                is_in=!is_in;
+            }
+        }
+        
+    return is_in;
+    }
+
+    function isitbetweenLine(point, garis){
+        var points = [garis.point1, garis.point2];
+        var n=2,
+        is_in=false,
+        x=point[0],
+        y=point[1],
+        x1,x2,y1,y2;
+
+        for(var i=0; i < n-1; ++i){
+            //a
+            x1=points[i][0];
+            y1=points[i][1];
+
+            //b
+            x2=points[i+1][0];
+            y2=points[i+1][1];
+            
+        
+            if(y < y1 != y < y2 && x < (x2-x1) * (y-y1) / (y2-y1) + x1){
+                is_in=!is_in;
+            }
+        }
+        
+    return is_in;
     }
         
 }
